@@ -1,11 +1,23 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import styled from 'styled-components/native';
 
 export const HomeScreen: React.FC = () => {
   return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
+    <Container>
+      <StyledText>Home Screen</StyledText>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const StyledText = styled.Text`
+  font-size: 20px;
+  color: #333;
+`;
+
+export default HomeScreen;
