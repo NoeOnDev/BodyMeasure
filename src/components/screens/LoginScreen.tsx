@@ -33,6 +33,7 @@ export const LoginScreen = ({
 }: LoginScreenProps): React.JSX.Element => {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
@@ -112,16 +113,28 @@ export const LoginScreen = ({
             <Text style={styles.loginSubtitle}>{loginSubtitle}</Text>
 
             <View style={styles.inputContainer}>
-              <Icon name="user" size={20} color="#999" style={styles.icon} />
+              <Icon
+                name="user"
+                size={20}
+                color={username ? '#0078FF' : '#999'}
+                style={styles.icon}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Usuario"
                 placeholderTextColor="#999"
+                value={username}
+                onChangeText={setUsername}
               />
             </View>
 
             <View style={styles.inputContainer}>
-              <Icon name="lock" size={20} color="#999" style={styles.icon} />
+              <Icon
+                name="lock"
+                size={20}
+                color={password ? '#0078FF' : '#999'}
+                style={styles.icon}
+              />
               <TextInput
                 style={styles.input}
                 placeholder="Contraseña"
