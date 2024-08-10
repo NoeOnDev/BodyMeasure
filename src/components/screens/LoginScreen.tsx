@@ -75,6 +75,10 @@ export const LoginScreen = ({
     setPasswordVisible(!passwordVisible);
   };
 
+  const clearUsername = () => {
+    setUsername('');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
@@ -126,6 +130,16 @@ export const LoginScreen = ({
                 value={username}
                 onChangeText={setUsername}
               />
+              {username.length > 0 && (
+                <TouchableOpacity activeOpacity={0.8} onPress={clearUsername}>
+                  <Icon
+                    name="times-circle"
+                    size={20}
+                    color="#bbb"
+                    style={styles.clearIcon}
+                  />
+                </TouchableOpacity>
+              )}
             </View>
 
             <View style={styles.inputContainer}>
@@ -151,6 +165,7 @@ export const LoginScreen = ({
                     name={passwordVisible ? 'eye-slash' : 'eye'}
                     size={20}
                     color="#bbb"
+                    style={styles.clearIcon}
                   />
                 </TouchableOpacity>
               )}

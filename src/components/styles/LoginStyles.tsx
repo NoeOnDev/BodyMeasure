@@ -66,6 +66,10 @@ export const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
+  clearIcon: {
+    paddingLeft: 10,
+    paddingRight: 5,
+  },
   input: {
     flex: 1,
     fontSize: 16,
