@@ -12,6 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
 
 interface LoginScreenProps {
@@ -161,8 +162,8 @@ export const LoginScreen = ({
                 <TouchableOpacity
                   activeOpacity={0.8}
                   onPress={togglePasswordVisibility}>
-                  <Icon
-                    name={passwordVisible ? 'eye-slash' : 'eye'}
+                  <IconIonicons
+                    name={passwordVisible ? 'eye-off' : 'eye'}
                     size={20}
                     color="#bbb"
                     style={styles.clearIcon}

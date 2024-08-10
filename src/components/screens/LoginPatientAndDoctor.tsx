@@ -5,20 +5,28 @@ import {LoginScreen} from './LoginScreen';
 export const LoginSwitcher = (): React.JSX.Element => {
   const slideInAnimation = useRef(new Animated.Value(0)).current;
   const [isPatient, setIsPatient] = useState(true);
+  const [isSwitching, setIsSwitching] = useState(false);
 
   const handleNavigate = () => {
+    if (isSwitching) return;
+
+    setIsSwitching(true);
     Animated.spring(slideInAnimation, {
       toValue: isPatient ? -0.01 : 0.01,
-      friction: 8,
+      friction: 10,
       useNativeDriver: true,
     }).start(() => {
       setIsPatient(!isPatient);
       slideInAnimation.setValue(isPatient ? 120 : -120);
       Animated.spring(slideInAnimation, {
         toValue: 0,
-        friction: 8,
+        friction: 10,
         useNativeDriver: true,
-      }).start();
+      }).start(() => {
+        setTimeout(() => {
+          setIsSwitching(false);
+        }, 100);
+      });
     });
   };
 

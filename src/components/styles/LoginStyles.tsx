@@ -18,6 +18,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     overflow: 'hidden',
+    elevation: 10,
   },
   title: {
     fontSize: 42,
