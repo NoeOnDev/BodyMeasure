@@ -1,117 +1,144 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  useColorScheme,
+  TextInput,
   View,
+  TouchableOpacity,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
+const App = (): React.JSX.Element => {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+      <View style={styles.content}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Bienvenido a BodyMeasure</Text>
+          <Text style={styles.subtitle}>
+            Organiza tu salud, simplifica tu vida
+          </Text>
         </View>
-      </ScrollView>
+
+        <View style={styles.loginContainer}>
+          <Text style={styles.loginTitle}>Iniciar sesión</Text>
+          <Text style={styles.loginSubtitle}>Como paciente</Text>
+
+          <View style={styles.inputContainer}>
+            <Icon name="user" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Carlos Alberto"
+              placeholderTextColor="#999"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Icon name="lock" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Contraseña"
+              placeholderTextColor="#999"
+              secureTextEntry
+            />
+          </View>
+
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Iniciar sesión</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.footerText}>
+            ¿Eres médico? Haz clic <Text style={styles.link}>aquí</Text> y
+            gestiona tus pacientes
+          </Text>
+        </View>
+      </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#0078FF',
   },
-  sectionTitle: {
+  content: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  headerContainer: {
+    marginTop: 40,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'left',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#ffffff',
+    textAlign: 'left',
+  },
+  loginContainer: {
+    flex: 0.9,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopStartRadius: 60,
+    elevation: 3,
+  },
+  loginTitle: {
     fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 5,
+  },
+  loginSubtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#333',
+  },
+  button: {
+    backgroundColor: '#0078FF',
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
     fontWeight: '600',
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  footerText: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
   },
-  highlight: {
-    fontWeight: '700',
+  link: {
+    color: '#0078FF',
+    textDecorationLine: 'underline',
   },
 });
 
