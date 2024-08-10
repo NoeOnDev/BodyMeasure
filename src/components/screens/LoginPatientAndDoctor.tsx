@@ -8,7 +8,7 @@ export const LoginSwitcher = (): React.JSX.Element => {
 
   const handleNavigate = () => {
     Animated.spring(slideInAnimation, {
-      toValue: isPatient ? -0 : 0,
+      toValue: isPatient ? -0.01 : 0.01,
       friction: 8,
       useNativeDriver: true,
     }).start(() => {
