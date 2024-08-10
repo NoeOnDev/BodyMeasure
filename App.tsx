@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -7,21 +7,73 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const App = (): React.JSX.Element => {
+  const scaleValue = useRef(new Animated.Value(1)).current;
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [password, setPassword] = useState('');
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
+  const handlePressIn = () => {
+    Animated.spring(scaleValue, {
+      toValue: 0.98,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleValue, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
 
-      <View style={styles.content}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>Bienvenido a BodyMeasure</Text>
-          <Text style={styles.subtitle}>
-            Organiza tu salud, simplifica tu vida
-          </Text>
-        </View>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.content}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : -50}>
+        {!isKeyboardVisible && (
+          <View style={styles.headerContainer}>
+            <Text style={styles.title}>Bienvenido a BodyMeasure</Text>
+            <Text style={styles.subtitle}>
+              Organiza tu salud, simplifica tu vida
+            </Text>
+          </View>
+        )}
 
         <View style={styles.loginContainer}>
           <Text style={styles.loginTitle}>Iniciar sesión</Text>
@@ -42,20 +94,43 @@ const App = (): React.JSX.Element => {
               style={styles.input}
               placeholder="Contraseña"
               placeholderTextColor="#999"
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
+              value={password}
+              onChangeText={setPassword}
             />
+            {password.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={togglePasswordVisibility}>
+                <Icon
+                  name={passwordVisible ? 'eye-slash' : 'eye'}
+                  size={20}
+                  color="#bbb"
+                />
+              </TouchableOpacity>
+            )}
           </View>
 
-          <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-            <Text style={styles.buttonText}>Iniciar sesión</Text>
-          </TouchableOpacity>
+          <Animated.View
+            style={[
+              styles.animatedButtonContainer,
+              {transform: [{scale: scaleValue}]},
+            ]}>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={styles.button}
+              onPressIn={handlePressIn}
+              onPressOut={handlePressOut}>
+              <Text style={styles.buttonText}>Iniciar sesión</Text>
+            </TouchableOpacity>
+          </Animated.View>
 
           <Text style={styles.footerText}>
             ¿Eres médico? Haz clic <Text style={styles.link}>aquí</Text> y
             gestiona tus pacientes
           </Text>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -85,9 +160,10 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: 'left',
     fontFamily: 'Montserrat-SemiBold',
+    marginBottom: 70,
   },
   loginContainer: {
-    flex: 0.9,
+    flex: 1,
     backgroundColor: '#fff',
     padding: 20,
     borderTopStartRadius: 82,
@@ -126,6 +202,9 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#333',
+  },
+  animatedButtonContainer: {
+    width: '100%',
   },
   button: {
     backgroundColor: '#0078FF',
