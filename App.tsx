@@ -31,7 +31,7 @@ const App = (): React.JSX.Element => {
             <Icon name="user" size={20} color="#999" style={styles.icon} />
             <TextInput
               style={styles.input}
-              placeholder="Carlos Alberto"
+              placeholder="Usuario"
               placeholderTextColor="#999"
             />
           </View>
@@ -46,7 +46,7 @@ const App = (): React.JSX.Element => {
             />
           </View>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.button}>
             <Text style={styles.buttonText}>Iniciar sesión</Text>
           </TouchableOpacity>
 
@@ -71,35 +71,42 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     marginTop: 40,
+    marginLeft: 30,
+    gap: 10,
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 42,
     color: '#ffffff',
     textAlign: 'left',
+    fontFamily: 'Montserrat-Bold',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#ffffff',
     textAlign: 'left',
+    fontFamily: 'Montserrat-SemiBold',
   },
   loginContainer: {
     flex: 0.9,
     backgroundColor: '#fff',
     padding: 20,
-    borderTopStartRadius: 60,
+    borderTopStartRadius: 82,
     elevation: 3,
+    alignItems: 'center',
   },
   loginTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 5,
+    fontSize: 42,
+    color: '#0078FF',
+    marginTop: 20,
+    fontFamily: 'Montserrat-SemiBold',
+    textAlign: 'center',
   },
   loginSubtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
+    fontSize: 42,
+    color: '#0078FF',
+    marginBottom: 25,
+    fontFamily: 'Montserrat-SemiBold',
+    textAlign: 'center',
   },
   inputContainer: {
     flexDirection: 'row',
@@ -110,6 +117,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    width: '100%',
   },
   icon: {
     marginRight: 10,
@@ -125,20 +133,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     marginBottom: 20,
+    width: '100%',
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'Montserrat-Bold',
   },
   footerText: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#666',
     textAlign: 'center',
+    fontFamily: 'Montserrat-Regular',
   },
   link: {
     color: '#0078FF',
     textDecorationLine: 'underline',
+    fontFamily: 'Montserrat-Regular',
   },
 });
 
