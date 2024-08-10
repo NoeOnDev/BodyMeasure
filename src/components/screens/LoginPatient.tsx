@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const App = (): React.JSX.Element => {
+export const LoginPatient = (): React.JSX.Element => {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [password, setPassword] = useState('');
@@ -232,5 +232,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
 });
-
-export default App;
