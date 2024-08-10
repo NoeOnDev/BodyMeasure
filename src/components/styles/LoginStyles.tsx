@@ -36,23 +36,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     padding: 20,
-    elevation: 3,
-    alignItems: 'center',
-  },
-  loginContainerPatient: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopStartRadius: 82,
-    elevation: 3,
-    alignItems: 'center',
-  },
-  loginContainerDoctor: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopEndRadius: 82,
-    elevation: 3,
     alignItems: 'center',
   },
   loginTitle: {
@@ -113,7 +96,6 @@ export const styles = StyleSheet.create({
   },
   link: {
     color: '#0078FF',
-    textDecorationLine: 'underline',
     fontFamily: 'Montserrat-Regular',
   },
 });

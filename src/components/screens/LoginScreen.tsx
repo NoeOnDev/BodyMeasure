@@ -20,6 +20,7 @@ interface LoginScreenProps {
   footerText: string;
   footerLinkText: string;
   slideInAnimation: Animated.Value;
+  userType: 'Patient' | 'Doctor';
 }
 
 export const LoginScreen = ({
@@ -28,6 +29,7 @@ export const LoginScreen = ({
   footerText,
   footerLinkText,
   slideInAnimation,
+  userType,
 }: LoginScreenProps): React.JSX.Element => {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -89,12 +91,21 @@ export const LoginScreen = ({
           </View>
         )}
 
-        <View style={styles.whiteBackgroundContainer}>
+        <View
+          style={[
+            styles.whiteBackgroundContainer,
+            {
+              borderTopStartRadius: userType === 'Patient' ? 82 : 0,
+              borderTopEndRadius: userType === 'Doctor' ? 82 : 0,
+            },
+          ]}>
           <Animated.View
             style={[
               styles.loginContainer,
               {
                 transform: [{translateX: slideInAnimation}],
+                borderTopStartRadius: userType === 'Patient' ? 82 : 0,
+                borderTopEndRadius: userType === 'Doctor' ? 82 : 0,
               },
             ]}>
             <Text style={styles.loginTitle}>Iniciar sesión</Text>
@@ -148,9 +159,9 @@ export const LoginScreen = ({
 
             <Text style={styles.footerText}>
               {footerText}{' '}
-              <TouchableOpacity onPress={navigateTo}>
-                <Text style={styles.link}>{footerLinkText}</Text>
-              </TouchableOpacity>
+              <Text onPress={navigateTo} style={styles.link}>
+                {footerLinkText}
+              </Text>
             </Text>
           </Animated.View>
         </View>

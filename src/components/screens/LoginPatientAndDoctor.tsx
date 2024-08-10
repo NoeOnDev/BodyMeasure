@@ -1,24 +1,22 @@
 import React, {useRef, useState} from 'react';
 import {Animated} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {LoginScreen} from './LoginScreen';
 
 export const LoginSwitcher = (): React.JSX.Element => {
   const slideInAnimation = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
   const [isPatient, setIsPatient] = useState(true);
 
   const handleNavigate = () => {
-    Animated.timing(slideInAnimation, {
-      toValue: isPatient ? -300 : 300,
-      duration: 300,
+    Animated.spring(slideInAnimation, {
+      toValue: isPatient ? -400 : 400,
+      friction: 5,
       useNativeDriver: true,
     }).start(() => {
       setIsPatient(!isPatient);
-      slideInAnimation.setValue(isPatient ? 300 : -300);
-      Animated.timing(slideInAnimation, {
+      slideInAnimation.setValue(isPatient ? 120 : -120);
+      Animated.spring(slideInAnimation, {
         toValue: 0,
-        duration: 300,
+        friction: 5,
         useNativeDriver: true,
       }).start();
     });
@@ -33,6 +31,7 @@ export const LoginSwitcher = (): React.JSX.Element => {
       }
       footerLinkText="aquí y gestiona tus pacientes"
       slideInAnimation={slideInAnimation}
+      userType={isPatient ? 'Patient' : 'Doctor'}
     />
   );
 };
