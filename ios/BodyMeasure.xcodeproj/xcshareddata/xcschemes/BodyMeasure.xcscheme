@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "MoodProblems.app"
-               BlueprintName = "MoodProblems"
-               ReferencedContainer = "container:MoodProblems.xcodeproj">
+               BuildableName = "BodyMeasure.app"
+               BlueprintName = "BodyMeasure"
+               ReferencedContainer = "container:BodyMeasure.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "MoodProblemsTests.xctest"
-               BlueprintName = "MoodProblemsTests"
-               ReferencedContainer = "container:MoodProblems.xcodeproj">
+               BuildableName = "BodyMeasureTests.xctest"
+               BlueprintName = "BodyMeasureTests"
+               ReferencedContainer = "container:BodyMeasure.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoodProblems.app"
-            BlueprintName = "MoodProblems"
-            ReferencedContainer = "container:MoodProblems.xcodeproj">
+            BuildableName = "BodyMeasure.app"
+            BlueprintName = "BodyMeasure"
+            ReferencedContainer = "container:BodyMeasure.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "MoodProblems.app"
-            BlueprintName = "MoodProblems"
-            ReferencedContainer = "container:MoodProblems.xcodeproj">
+            BuildableName = "BodyMeasure.app"
+            BlueprintName = "BodyMeasure"
+            ReferencedContainer = "container:BodyMeasure.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
