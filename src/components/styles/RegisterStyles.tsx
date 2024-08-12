@@ -9,13 +9,11 @@ export const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
   },
-  section: {
-    marginBottom: 24,
-  },
+  section: {},
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 12,
     color: '#333',
     textAlign: 'center',
   },
@@ -49,7 +47,7 @@ export const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#ccc',
-    marginVertical: 16,
+    backgroundColor: '#000',
+    marginVertical: 24,
   },
 });
