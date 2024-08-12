@@ -84,7 +84,26 @@ export const RegisterScreen = (): React.JSX.Element => {
     });
   };
 
+  const areFieldsFilled = () => {
+    return (
+      personalInfo.name &&
+      personalInfo.email &&
+      personalInfo.phone &&
+      physicalData.age &&
+      physicalData.weight &&
+      physicalData.gender &&
+      physicalData.height &&
+      accountInfo.username &&
+      accountInfo.password
+    );
+  };
+
   const handleRegisterPatient = async () => {
+    if (!areFieldsFilled()) {
+      Alert.alert('Error', 'Por favor, complete todos los campos.');
+      return;
+    }
+
     try {
       const patientData = {
         name: personalInfo.name,
@@ -324,16 +343,18 @@ export const RegisterScreen = (): React.JSX.Element => {
                 setAccountInfo({...accountInfo, password: text})
               }
             />
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={togglePasswordVisibility}>
-              <IconIonicons
-                name={passwordVisible ? 'eye-off' : 'eye'}
-                size={20}
-                color="#bbb"
-                style={styles.clearIcon}
-              />
-            </TouchableOpacity>
+            {accountInfo.password.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={togglePasswordVisibility}>
+                <IconIonicons
+                  name={passwordVisible ? 'eye-off' : 'eye'}
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 

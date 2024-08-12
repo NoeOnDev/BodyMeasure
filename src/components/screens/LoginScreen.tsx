@@ -96,12 +96,10 @@ export const LoginScreen = ({
         Alert.alert('Éxito', 'Inicio de sesión como Paciente exitoso');
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        Alert.alert('Error', error.response?.data || 'Error al iniciar sesión');
-      } else if (error instanceof Error) {
-        Alert.alert('Error', error.message);
+      if (typeof error === 'string') {
+        Alert.alert('Error', error);
       } else {
-        Alert.alert('Error', 'Credenciales inválidas');
+        Alert.alert('Error', 'Error desconocido al iniciar sesión');
       }
     }
   };

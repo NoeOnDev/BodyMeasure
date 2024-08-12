@@ -17,7 +17,7 @@ export const registerPatient = async (patientData: {
     const token = await AsyncStorage.getItem('authToken');
 
     if (!token) {
-      throw 'No se encontró el token de autenticación';
+      throw new Error('No se encontró el token de autenticación');
     }
 
     const response = await axios.post(`${API_URL}/patient`, patientData, {
@@ -29,9 +29,11 @@ export const registerPatient = async (patientData: {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      throw error.response?.data || 'Error al registrar al paciente';
+      const errorMessage =
+        error.response?.data?.message || 'Error al registrar al paciente';
+      throw new Error(errorMessage);
     } else {
-      throw 'Error al registrar al paciente';
+      throw new Error('Error al registrar al paciente');
     }
   }
 };
