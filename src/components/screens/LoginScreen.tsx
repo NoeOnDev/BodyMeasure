@@ -16,7 +16,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
 import {loginDoctor, loginPatient} from '../../services/AuthService';
-import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 
 interface LoginScreenProps {
@@ -87,6 +86,13 @@ export const LoginScreen = ({
 
   const handleLogin = async () => {
     try {
+      if (!username || !password) {
+        Alert.alert('Error', 'Por favor, ingresa tu usuario y contraseña.');
+        return;
+      }
+
+      console.log('Intentando iniciar sesión con:', {username, password});
+
       if (userType === 'Doctor') {
         const data = await loginDoctor(username, password);
         Alert.alert('Éxito', 'Inicio de sesión como Doctor exitoso');
