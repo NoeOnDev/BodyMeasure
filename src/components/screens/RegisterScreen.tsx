@@ -28,13 +28,20 @@ export const RegisterScreen = (): React.JSX.Element => {
     password: '',
   });
 
+  const getIconColor = (value: string) => (value ? '#0078FF' : '#999');
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información personal</Text>
           <View style={styles.inputContainer}>
-            <Icon name="user" size={20} color="#999" style={styles.icon} />
+            <Icon
+              name="user"
+              size={20}
+              color={getIconColor(personalInfo.name)}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Nombre"
@@ -45,7 +52,12 @@ export const RegisterScreen = (): React.JSX.Element => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Icon name="envelope" size={20} color="#999" style={styles.icon} />
+            <Icon
+              name="envelope"
+              size={20}
+              color={getIconColor(personalInfo.email)}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Correo electrónico"
@@ -53,10 +65,16 @@ export const RegisterScreen = (): React.JSX.Element => {
               onChangeText={text =>
                 setPersonalInfo({...personalInfo, email: text})
               }
+              keyboardType="email-address"
             />
           </View>
           <View style={styles.inputContainer}>
-            <Icon name="phone" size={20} color="#999" style={styles.icon} />
+            <Icon
+              name="phone"
+              size={20}
+              color={getIconColor(personalInfo.phone)}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Número de teléfono"
@@ -64,6 +82,7 @@ export const RegisterScreen = (): React.JSX.Element => {
               onChangeText={text =>
                 setPersonalInfo({...personalInfo, phone: text})
               }
+              keyboardType="phone-pad"
             />
           </View>
         </View>
@@ -80,6 +99,7 @@ export const RegisterScreen = (): React.JSX.Element => {
               onChangeText={text =>
                 setPhysicalData({...physicalData, age: text})
               }
+              keyboardType="numeric"
             />
             <TextInput
               style={[styles.input, styles.smallInput]}
@@ -88,11 +108,13 @@ export const RegisterScreen = (): React.JSX.Element => {
               onChangeText={text =>
                 setPhysicalData({...physicalData, weight: text})
               }
+              keyboardType="numeric"
             />
           </View>
           <View style={styles.row}>
             <View style={[styles.input, styles.smallInput]}>
               <Picker
+                style={styles.picker}
                 selectedValue={physicalData.gender}
                 onValueChange={itemValue =>
                   setPhysicalData({...physicalData, gender: itemValue})
@@ -109,6 +131,7 @@ export const RegisterScreen = (): React.JSX.Element => {
               onChangeText={text =>
                 setPhysicalData({...physicalData, height: text})
               }
+              keyboardType="numeric"
             />
           </View>
         </View>
@@ -121,7 +144,7 @@ export const RegisterScreen = (): React.JSX.Element => {
             <Icon
               name="user-circle"
               size={20}
-              color="#999"
+              color={getIconColor(accountInfo.username)}
               style={styles.icon}
             />
             <TextInput
@@ -134,7 +157,12 @@ export const RegisterScreen = (): React.JSX.Element => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Icon name="lock" size={20} color="#999" style={styles.icon} />
+            <Icon
+              name="lock"
+              size={20}
+              color={getIconColor(accountInfo.password)}
+              style={styles.icon}
+            />
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Contraseña"

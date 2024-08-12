@@ -32,6 +32,11 @@ export const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
+  picker: {
+    fontSize: 16,
+    marginLeft: -12,
+    fontFamily: 'Montserrat-Regular',
+  },
   inputWithIcon: {
     flex: 1,
     height: 50,
@@ -71,6 +76,6 @@ export const styles = StyleSheet.create({
   divider: {
     height: 1,
     backgroundColor: '#000',
-    marginVertical: 12,
+    marginVertical: 14,
   },
 });
