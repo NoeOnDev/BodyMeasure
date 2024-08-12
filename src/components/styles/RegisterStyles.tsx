@@ -32,6 +32,28 @@ export const styles = StyleSheet.create({
   icon: {
     marginRight: 10,
   },
+  inputWithUnitContainer: {
+    position: 'relative',
+    width: '48%',
+  },
+  inputWithUnit: {
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 16,
+    width: '100%',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+  },
+  unitText: {
+    position: 'absolute',
+    right: 20,
+    top: 15,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+  },
   picker: {
     fontSize: 16,
     marginLeft: -12,
@@ -60,6 +82,9 @@ export const styles = StyleSheet.create({
   smallInput: {
     width: '48%',
     fontFamily: 'Montserrat-Regular',
+  },
+  animatedButtonContainer: {
+    width: '100%',
   },
   button: {
     backgroundColor: '#0078FF',

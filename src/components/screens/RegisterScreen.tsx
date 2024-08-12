@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -30,9 +31,26 @@ export const RegisterScreen = (): React.JSX.Element => {
 
   const getIconColor = (value: string) => (value ? '#0078FF' : '#999');
 
+  const scaleValue = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleValue, {
+      toValue: 0.98,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleValue, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* Información personal */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información personal</Text>
           <View style={styles.inputContainer}>
@@ -89,28 +107,37 @@ export const RegisterScreen = (): React.JSX.Element => {
 
         <View style={styles.divider} />
 
+        {/* Datos físicos */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Datos físicos</Text>
+
           <View style={styles.row}>
-            <TextInput
-              style={[styles.input, styles.smallInput]}
-              placeholder="Edad"
-              value={physicalData.age}
-              onChangeText={text =>
-                setPhysicalData({...physicalData, age: text})
-              }
-              keyboardType="numeric"
-            />
-            <TextInput
-              style={[styles.input, styles.smallInput]}
-              placeholder="Peso"
-              value={physicalData.weight}
-              onChangeText={text =>
-                setPhysicalData({...physicalData, weight: text})
-              }
-              keyboardType="numeric"
-            />
+            <View style={styles.inputWithUnitContainer}>
+              <TextInput
+                style={[styles.input, styles.smallInput, styles.inputWithUnit]}
+                placeholder="Edad"
+                value={physicalData.age}
+                onChangeText={text =>
+                  setPhysicalData({...physicalData, age: text})
+                }
+                keyboardType="numeric"
+              />
+              <Text style={styles.unitText}>años</Text>
+            </View>
+            <View style={styles.inputWithUnitContainer}>
+              <TextInput
+                style={[styles.input, styles.smallInput, styles.inputWithUnit]}
+                placeholder="Peso"
+                value={physicalData.weight}
+                onChangeText={text =>
+                  setPhysicalData({...physicalData, weight: text})
+                }
+                keyboardType="numeric"
+              />
+              <Text style={styles.unitText}>kg</Text>
+            </View>
           </View>
+
           <View style={styles.row}>
             <View style={[styles.input, styles.smallInput]}>
               <Picker
@@ -124,20 +151,24 @@ export const RegisterScreen = (): React.JSX.Element => {
                 <Picker.Item label="Femenino" value="Femenino" />
               </Picker>
             </View>
-            <TextInput
-              style={[styles.input, styles.smallInput]}
-              placeholder="Estatura"
-              value={physicalData.height}
-              onChangeText={text =>
-                setPhysicalData({...physicalData, height: text})
-              }
-              keyboardType="numeric"
-            />
+            <View style={styles.inputWithUnitContainer}>
+              <TextInput
+                style={[styles.input, styles.smallInput, styles.inputWithUnit]}
+                placeholder="Estatura"
+                value={physicalData.height}
+                onChangeText={text =>
+                  setPhysicalData({...physicalData, height: text})
+                }
+                keyboardType="numeric"
+              />
+              <Text style={styles.unitText}>cm</Text>
+            </View>
           </View>
         </View>
 
         <View style={styles.divider} />
 
+        {/* Información de la cuenta */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información de la cuenta</Text>
           <View style={styles.inputContainer}>
@@ -175,9 +206,19 @@ export const RegisterScreen = (): React.JSX.Element => {
           </View>
         </View>
 
-        <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-          <Text style={styles.buttonText}>Agregar paciente</Text>
-        </TouchableOpacity>
+        <Animated.View
+          style={[
+            styles.animatedButtonContainer,
+            {transform: [{scale: scaleValue}]},
+          ]}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            style={styles.button}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}>
+            <Text style={styles.buttonText}>Agregar paciente</Text>
+          </TouchableOpacity>
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );
