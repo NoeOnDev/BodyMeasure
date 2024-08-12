@@ -29,7 +29,12 @@ const App = (): React.JSX.Element => {
         <Stack.Screen
           name="Patients"
           component={PatientsScreen}
-          options={{title: 'Mis pacientes'}}
+          options={{
+            title: 'Mis pacientes',
+            headerBackButtonMenuEnabled: false,
+            headerBackVisible: false,
+            headerLeft: () => null,
+          }}
         />
         <Stack.Screen
           name="Register"

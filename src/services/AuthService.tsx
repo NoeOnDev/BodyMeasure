@@ -21,3 +21,23 @@ export const loginDoctor = async (username: string, password: string) => {
     }
   }
 };
+
+export const loginPatient = async (username: string, password: string) => {
+  try {
+    const response = await axios.post(`${API_URL}/patient/login`, {
+      username,
+      password,
+    });
+
+    const token = response.data.token;
+    await AsyncStorage.setItem('authToken', token);
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw error.response?.data || 'Error al iniciar sesión';
+    } else {
+      throw 'Error al iniciar sesión';
+    }
+  }
+};

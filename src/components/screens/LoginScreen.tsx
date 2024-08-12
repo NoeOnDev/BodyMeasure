@@ -15,8 +15,9 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
-import {loginDoctor} from '../../services/AuthService';
+import {loginDoctor, loginPatient} from '../../services/AuthService';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
 interface LoginScreenProps {
   loginSubtitle: string;
@@ -35,6 +36,7 @@ export const LoginScreen = ({
   slideInAnimation,
   userType,
 }: LoginScreenProps): React.JSX.Element => {
+  const navigation = useNavigation();
   const scaleValue = useRef(new Animated.Value(1)).current;
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState('');
@@ -85,8 +87,14 @@ export const LoginScreen = ({
 
   const handleLogin = async () => {
     try {
-      const data = await loginDoctor(username, password);
-      Alert.alert('Éxito', 'Inicio de sesión exitoso');
+      if (userType === 'Doctor') {
+        const data = await loginDoctor(username, password);
+        Alert.alert('Éxito', 'Inicio de sesión como Doctor exitoso');
+        navigation.navigate('Patients');
+      } else {
+        const data = await loginPatient(username, password);
+        Alert.alert('Éxito', 'Inicio de sesión como Paciente exitoso');
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         Alert.alert('Error', error.response?.data || 'Error al iniciar sesión');
@@ -200,8 +208,7 @@ export const LoginScreen = ({
                 style={styles.button}
                 onPressIn={handlePressIn}
                 onPressOut={handlePressOut}
-                onPress={handleLogin} // Llama a la función de login
-              >
+                onPress={handleLogin}>
                 <Text style={styles.buttonText}>Iniciar sesión</Text>
               </TouchableOpacity>
             </Animated.View>
