@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
+import {useNavigation} from '@react-navigation/native';
 
 interface Patient {
   id: number;
@@ -42,6 +43,7 @@ export const PatientsScreen = (): React.JSX.Element => {
   );
   const scaleValue = useRef(new Animated.Value(1)).current;
   const pressAnimValue = useRef(new Animated.Value(1)).current;
+  const navigation = useNavigation();
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedPatientId === id) {
@@ -165,7 +167,8 @@ export const PatientsScreen = (): React.JSX.Element => {
             activeOpacity={0.9}
             style={styles.addButton}
             onPressIn={handlePressIn}
-            onPressOut={handlePressOut}>
+            onPressOut={handlePressOut}
+            onPress={() => navigation.navigate('Register')}>
             <Icon name="add" size={24} color="#fff" />
             <Text style={styles.addButtonText}>Agregar</Text>
           </TouchableOpacity>
