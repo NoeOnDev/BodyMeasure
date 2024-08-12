@@ -119,7 +119,7 @@ export const LoginScreen = ({
 
             <View style={styles.inputContainer}>
               <Icon
-                name="user"
+                name="user-circle"
                 size={20}
                 color={username ? '#0078FF' : '#999'}
                 style={styles.icon}

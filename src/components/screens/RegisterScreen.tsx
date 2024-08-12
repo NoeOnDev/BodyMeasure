@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import {styles} from '../styles/RegisterStyles';
 
 export const RegisterScreen = (): React.JSX.Element => {
@@ -32,30 +33,39 @@ export const RegisterScreen = (): React.JSX.Element => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información personal</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre"
-            value={personalInfo.name}
-            onChangeText={text =>
-              setPersonalInfo({...personalInfo, name: text})
-            }
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Correo electronico"
-            value={personalInfo.email}
-            onChangeText={text =>
-              setPersonalInfo({...personalInfo, email: text})
-            }
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Número de teléfono"
-            value={personalInfo.phone}
-            onChangeText={text =>
-              setPersonalInfo({...personalInfo, phone: text})
-            }
-          />
+          <View style={styles.inputContainer}>
+            <Icon name="user" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Nombre"
+              value={personalInfo.name}
+              onChangeText={text =>
+                setPersonalInfo({...personalInfo, name: text})
+              }
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name="envelope" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Correo electrónico"
+              value={personalInfo.email}
+              onChangeText={text =>
+                setPersonalInfo({...personalInfo, email: text})
+              }
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name="phone" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Número de teléfono"
+              value={personalInfo.phone}
+              onChangeText={text =>
+                setPersonalInfo({...personalInfo, phone: text})
+              }
+            />
+          </View>
         </View>
 
         <View style={styles.divider} />
@@ -107,23 +117,34 @@ export const RegisterScreen = (): React.JSX.Element => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información de la cuenta</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre de usuario"
-            value={accountInfo.username}
-            onChangeText={text =>
-              setAccountInfo({...accountInfo, username: text})
-            }
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Contraseña"
-            secureTextEntry
-            value={accountInfo.password}
-            onChangeText={text =>
-              setAccountInfo({...accountInfo, password: text})
-            }
-          />
+          <View style={styles.inputContainer}>
+            <Icon
+              name="user-circle"
+              size={20}
+              color="#999"
+              style={styles.icon}
+            />
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Nombre de usuario"
+              value={accountInfo.username}
+              onChangeText={text =>
+                setAccountInfo({...accountInfo, username: text})
+              }
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Icon name="lock" size={20} color="#999" style={styles.icon} />
+            <TextInput
+              style={styles.inputWithIcon}
+              placeholder="Contraseña"
+              secureTextEntry
+              value={accountInfo.password}
+              onChangeText={text =>
+                setAccountInfo({...accountInfo, password: text})
+              }
+            />
+          </View>
         </View>
 
         <TouchableOpacity activeOpacity={0.8} style={styles.button}>

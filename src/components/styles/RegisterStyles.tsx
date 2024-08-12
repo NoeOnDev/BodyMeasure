@@ -11,11 +11,31 @@ export const styles = StyleSheet.create({
   },
   section: {},
   sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 12,
+    fontSize: 20,
+    marginTop: 16,
+    marginBottom: 18,
     color: '#333',
     textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 16,
+    backgroundColor: '#fff',
+    fontSize: 16,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  inputWithIcon: {
+    flex: 1,
+    height: 50,
+    fontSize: 16,
   },
   input: {
     height: 50,
@@ -25,6 +45,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     width: '100%',
+    fontFamily: 'Montserrat-Regular',
+    fontSize: 16,
   },
   row: {
     flexDirection: 'row',
@@ -32,6 +54,7 @@ export const styles = StyleSheet.create({
   },
   smallInput: {
     width: '48%',
+    fontFamily: 'Montserrat-Regular',
   },
   button: {
     backgroundColor: '#0078FF',
@@ -43,11 +66,11 @@ export const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat-Bold',
   },
   divider: {
     height: 1,
     backgroundColor: '#000',
-    marginVertical: 24,
+    marginVertical: 12,
   },
 });
