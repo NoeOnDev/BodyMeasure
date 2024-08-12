@@ -7,11 +7,14 @@ import {
   View,
   TouchableOpacity,
   Animated,
+  Alert,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/RegisterStyles';
+import {registerPatient} from '../../services/RegisterPatient';
+import {useNavigation} from '@react-navigation/native';
 
 export const RegisterScreen = (): React.JSX.Element => {
   const [personalInfo, setPersonalInfo] = useState({
@@ -30,6 +33,8 @@ export const RegisterScreen = (): React.JSX.Element => {
     password: '',
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const navigation = useNavigation();
 
   const getIconColor = (value: string) => (value ? '#0078FF' : '#999');
 
@@ -59,6 +64,60 @@ export const RegisterScreen = (): React.JSX.Element => {
 
   const clearAccountInfoField = (field: keyof typeof accountInfo) => {
     setAccountInfo({...accountInfo, [field]: ''});
+  };
+
+  const clearFields = () => {
+    setPersonalInfo({
+      name: '',
+      email: '',
+      phone: '',
+    });
+    setPhysicalData({
+      age: '',
+      weight: '',
+      gender: '',
+      height: '',
+    });
+    setAccountInfo({
+      username: '',
+      password: '',
+    });
+  };
+
+  const handleRegisterPatient = async () => {
+    try {
+      const patientData = {
+        name: personalInfo.name,
+        username: accountInfo.username,
+        password: accountInfo.password,
+        age: parseInt(physicalData.age, 10),
+        sex: physicalData.gender,
+        weight: parseInt(physicalData.weight, 10),
+        phone: personalInfo.phone,
+        email: personalInfo.email,
+        height: parseInt(physicalData.height, 10),
+      };
+
+      const result = await registerPatient(patientData);
+      Alert.alert(
+        'Registro exitoso',
+        `El paciente ${result.name} ha sido registrado correctamente.`,
+        [{text: 'OK', onPress: () => navigation.navigate('Patients')}],
+      );
+      clearFields();
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(
+          'Error de registro',
+          error.message || 'Hubo un problema al registrar el paciente.',
+        );
+      } else {
+        Alert.alert(
+          'Error de registro',
+          'Hubo un problema al registrar el paciente.',
+        );
+      }
+    }
   };
 
   return (
@@ -229,7 +288,7 @@ export const RegisterScreen = (): React.JSX.Element => {
             />
             <TextInput
               style={styles.inputWithIcon}
-              placeholder="Usuario"
+              placeholder="Nombre de usuario"
               value={accountInfo.username}
               onChangeText={text =>
                 setAccountInfo({...accountInfo, username: text})
@@ -250,8 +309,8 @@ export const RegisterScreen = (): React.JSX.Element => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Icon
-              name="lock"
+            <IconIonicons
+              name="lock-closed"
               size={20}
               color={getIconColor(accountInfo.password)}
               style={styles.icon}
@@ -259,24 +318,22 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Contraseña"
-              value={accountInfo.password}
               secureTextEntry={!passwordVisible}
+              value={accountInfo.password}
               onChangeText={text =>
                 setAccountInfo({...accountInfo, password: text})
               }
             />
-            {accountInfo.password.length > 0 && (
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={togglePasswordVisibility}>
-                <IconIonicons
-                  name={passwordVisible ? 'eye-off' : 'eye'}
-                  size={20}
-                  color="#bbb"
-                  style={styles.clearIcon}
-                />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={togglePasswordVisibility}>
+              <IconIonicons
+                name={passwordVisible ? 'eye-off' : 'eye'}
+                size={20}
+                color="#bbb"
+                style={styles.clearIcon}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -289,7 +346,8 @@ export const RegisterScreen = (): React.JSX.Element => {
             activeOpacity={0.8}
             style={styles.button}
             onPressIn={handlePressIn}
-            onPressOut={handlePressOut}>
+            onPressOut={handlePressOut}
+            onPress={handleRegisterPatient}>
             <Text style={styles.buttonText}>Agregar paciente</Text>
           </TouchableOpacity>
         </Animated.View>
