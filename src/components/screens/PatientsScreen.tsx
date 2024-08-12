@@ -14,7 +14,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {getPatients, deletePatient} from '../../services/getPatientService';
+import {getPatients, deletePatient} from '../../services/PatientService';
 
 interface Patient {
   patient_id: number;

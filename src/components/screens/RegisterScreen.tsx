@@ -13,7 +13,7 @@ import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/RegisterStyles';
-import {registerPatient} from '../../services/RegisterPatient';
+import {registerPatient} from '../../services/PatientService';
 import {useNavigation} from '@react-navigation/native';
 
 export const RegisterScreen = (): React.JSX.Element => {
