@@ -1,0 +1,254 @@
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Animated,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+interface Patient {
+  id: number;
+  name: string;
+}
+
+const patients: Patient[] = [
+  {id: 1, name: 'Carlos Alberto Herrera González'},
+  {id: 2, name: 'María José Ramírez López'},
+  {id: 3, name: 'Ana Lucía Gómez Sánchez'},
+  {id: 4, name: 'Juan Pablo Pérez Rodríguez'},
+  {id: 5, name: 'Laura Sofía Fernández Martínez'},
+  {id: 6, name: 'Carlos Alberto Herrera González'},
+];
+
+const screenWidth = Dimensions.get('window').width;
+
+export const PatientsScreen = (): React.JSX.Element => {
+  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
+    null,
+  );
+  const [pressedPatientId, setPressedPatientId] = useState<number | null>(null);
+  const [menuPosition, setMenuPosition] = useState<{top: number; left: number}>(
+    {top: 0, left: 0},
+  );
+  const scaleValue = useRef(new Animated.Value(1)).current;
+  const pressAnimValue = useRef(new Animated.Value(1)).current;
+
+  const toggleMenu = (id: number, top: number, left: number) => {
+    // Si se selecciona una nueva fila, cerrar el menú anterior
+    setSelectedPatientId(prevId => (prevId === id ? null : id));
+    setMenuPosition({top: top - 30, left});
+  };
+
+  const handlePressIn = () => {
+    Animated.spring(scaleValue, {
+      toValue: 0.98,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleValue, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleRowPressIn = (id: number) => {
+    setPressedPatientId(id);
+    Animated.timing(pressAnimValue, {
+      toValue: 0.95,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleRowPressOut = () => {
+    setPressedPatientId(null);
+    Animated.timing(pressAnimValue, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const renderPatient = ({item}: {item: Patient}) => (
+    <Animated.View
+      style={[
+        styles.row,
+        selectedPatientId === item.id && styles.selectedRow,
+        pressedPatientId === item.id && {transform: [{scale: pressAnimValue}]},
+      ]}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        style={styles.rowContent}
+        onPressIn={() => handleRowPressIn(item.id)}
+        onPressOut={handleRowPressOut}
+        onPress={() => setSelectedPatientId(item.id)} // Cambiar el color de la fila seleccionada
+      >
+        <View style={styles.idCell}>
+          <Text style={styles.cellText}>{item.id}</Text>
+        </View>
+        <View style={styles.nameCell}>
+          <Text style={styles.cellText}>{item.name}</Text>
+        </View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.iconCell}
+          onPress={event => {
+            const {pageY, pageX} = event.nativeEvent;
+            toggleMenu(item.id, pageY, pageX);
+          }}>
+          <Icon name="more-vert" size={24} color="#666" />
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <Animated.View style={{transform: [{scale: scaleValue}]}}>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          style={styles.addButton}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}>
+          <Icon name="add" size={24} color="#fff" />
+          <Text style={styles.addButtonText}>Agregar paciente</Text>
+        </TouchableOpacity>
+      </Animated.View>
+      <View style={styles.tableHeader}>
+        <View style={styles.headerIdCell}>
+          <Text style={styles.headerText}>ID</Text>
+        </View>
+        <View style={styles.headerNameCell}>
+          <Text style={styles.headerText}>Nombre del paciente</Text>
+        </View>
+      </View>
+      <FlatList
+        data={patients}
+        renderItem={renderPatient}
+        keyExtractor={item => item.id.toString()}
+      />
+      {selectedPatientId !== null && (
+        <View
+          style={[
+            styles.menu,
+            {
+              top: menuPosition.top,
+              left: Math.min(menuPosition.left, screenWidth - 120),
+            },
+          ]}>
+          <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+            <Text style={styles.menuItemText}>Editar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+            <Text style={styles.menuItemText}>Eliminar</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#fff',
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#0078FF',
+    borderRadius: 8,
+    marginBottom: 20,
+    alignSelf: 'flex-end',
+  },
+  addButtonText: {
+    color: '#fff',
+    marginLeft: 8,
+    fontSize: 16,
+    fontFamily: 'Montserrat-Bold',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  headerIdCell: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderTopLeftRadius: 8,
+  },
+  headerNameCell: {
+    flex: 6,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+    borderTopRightRadius: 8,
+  },
+  headerText: {
+    fontSize: 16,
+    color: '#333',
+    fontFamily: 'Montserrat-Bold',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 1,
+    shadowOffset: {width: 0, height: 1},
+    position: 'relative',
+  },
+  rowContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  selectedRow: {
+    backgroundColor: '#e0e0e0',
+  },
+  idCell: {
+    flex: 1,
+    padding: 16,
+  },
+  nameCell: {
+    flex: 6,
+    padding: 16,
+  },
+  iconCell: {
+    padding: 16,
+  },
+  cellText: {
+    fontSize: 18,
+    fontFamily: 'Montserrat-Regular',
+  },
+  menu: {
+    position: 'absolute',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    shadowOffset: {width: 0, height: 2},
+    zIndex: 1,
+  },
+  menuItem: {
+    padding: 16,
+  },
+  menuItemText: {
+    fontSize: 16,
+    color: '#333',
+    fontFamily: 'Montserrat-Regular',
+  },
+});
