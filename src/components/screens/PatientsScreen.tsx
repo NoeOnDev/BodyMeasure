@@ -8,7 +8,7 @@ import {
   Animated,
   SafeAreaView,
   ActivityIndicator,
-  RefreshControl, // Importar RefreshControl
+  RefreshControl,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
@@ -25,7 +25,7 @@ const screenWidth = Dimensions.get('window').width;
 export const PatientsScreen = (): React.JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [refreshing, setRefreshing] = useState<boolean>(false); // Estado para el refresco
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
@@ -51,7 +51,7 @@ export const PatientsScreen = (): React.JSX.Element => {
       }
     } finally {
       setLoading(false);
-      setRefreshing(false); // Finaliza la recarga
+      setRefreshing(false);
     }
   };
 
@@ -61,7 +61,7 @@ export const PatientsScreen = (): React.JSX.Element => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    fetchPatients(); // Vuelve a traer los datos
+    fetchPatients();
   };
 
   const toggleMenu = (id: number, top: number, left: number) => {
@@ -161,69 +161,62 @@ export const PatientsScreen = (): React.JSX.Element => {
     );
   }
 
-  if (patients.length === 0) {
-    return (
-      <SafeAreaView style={styles.safeArea}>
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      {patients.length === 0 ? (
         <Text style={styles.noPatientsText}>
           Ups, aún no has agregado pacientes.
         </Text>
-      </SafeAreaView>
-    );
-  }
-
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        <View style={styles.tableHeader}>
-          <View style={styles.headerIdCell}>
-            <Text style={styles.headerText}>ID</Text>
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.tableHeader}>
+            <View style={styles.headerIdCell}>
+              <Text style={styles.headerText}>ID</Text>
+            </View>
+            <View style={styles.headerNameCell}>
+              <Text style={styles.headerText}>Nombre del paciente</Text>
+            </View>
           </View>
-          <View style={styles.headerNameCell}>
-            <Text style={styles.headerText}>Nombre del paciente</Text>
-          </View>
+          <FlatList
+            data={patients}
+            renderItem={renderPatient}
+            keyExtractor={item => item.patient_id.toString()}
+            contentContainerStyle={{paddingBottom: 80}}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          />
+          {selectedPatientId !== null && (
+            <View
+              style={[
+                styles.menu,
+                {
+                  top: menuPosition.top,
+                  left: Math.min(menuPosition.left, screenWidth - 120),
+                },
+              ]}>
+              <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+                <Text style={styles.menuItemText}>Editar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+                <Text style={styles.menuItemText}>Eliminar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        <FlatList
-          data={patients}
-          renderItem={renderPatient}
-          keyExtractor={item => item.patient_id.toString()}
-          contentContainerStyle={{paddingBottom: 80}}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-        />
-        {selectedPatientId !== null && (
-          <View
-            style={[
-              styles.menu,
-              {
-                top: menuPosition.top,
-                left: Math.min(menuPosition.left, screenWidth - 120),
-              },
-            ]}>
-            <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
-              <Text style={styles.menuItemText}>Editar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
-              <Text style={styles.menuItemText}>Eliminar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-        <Animated.View
-          style={[
-            styles.addButtonContainer,
-            {transform: [{scale: scaleValue}]},
-          ]}>
-          <TouchableOpacity
-            activeOpacity={0.9}
-            style={styles.addButton}
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
-            onPress={() => navigation.navigate('Register')}>
-            <Icon name="add" size={24} color="#fff" />
-            <Text style={styles.addButtonText}>Agregar</Text>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+      )}
+      <Animated.View
+        style={[styles.addButtonContainer, {transform: [{scale: scaleValue}]}]}>
+        <TouchableOpacity
+          activeOpacity={0.9}
+          style={styles.addButton}
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          onPress={() => navigation.navigate('Register')}>
+          <Icon name="add" size={24} color="#fff" />
+          <Text style={styles.addButtonText}>Agregar</Text>
+        </TouchableOpacity>
+      </Animated.View>
     </SafeAreaView>
   );
 };
