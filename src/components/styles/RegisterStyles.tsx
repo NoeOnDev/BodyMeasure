@@ -27,7 +27,9 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 16,
     backgroundColor: '#fff',
+    fontFamily: 'Montserrat-Regular',
     fontSize: 16,
+    color: '#333',
   },
   icon: {
     marginRight: 10,
@@ -35,6 +37,7 @@ export const styles = StyleSheet.create({
   inputWithUnitContainer: {
     position: 'relative',
     width: '48%',
+    color: '#333',
   },
   inputWithUnit: {
     height: 50,
@@ -46,6 +49,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     fontSize: 16,
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   unitText: {
     position: 'absolute',
@@ -53,11 +57,13 @@ export const styles = StyleSheet.create({
     top: 15,
     fontSize: 16,
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   picker: {
     fontSize: 16,
     marginLeft: -12,
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   inputWithIcon: {
     flex: 1,
@@ -74,6 +80,7 @@ export const styles = StyleSheet.create({
     width: '100%',
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
+    color: '#333',
   },
   row: {
     flexDirection: 'row',
@@ -82,6 +89,7 @@ export const styles = StyleSheet.create({
   smallInput: {
     width: '48%',
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   animatedButtonContainer: {
     width: '100%',

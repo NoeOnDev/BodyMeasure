@@ -22,6 +22,11 @@ const App = (): React.JSX.Element => {
           },
         }}>
         <Stack.Screen
+          name="Login"
+          component={LoginSwitcher}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="Patients"
           component={PatientsScreen}
           options={{title: 'Mis pacientes'}}
@@ -30,11 +35,6 @@ const App = (): React.JSX.Element => {
           name="Register"
           component={RegisterScreen}
           options={{title: 'Registro de paciente'}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={LoginSwitcher}
-          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
