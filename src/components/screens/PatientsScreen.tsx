@@ -136,6 +136,7 @@ export const PatientsScreen = (): React.JSX.Element => {
             try {
               await deletePatient(patientId);
               fetchPatients();
+              setSelectedPatientId(null);
             } catch (error) {
               Alert.alert('Error', String(error));
             }
