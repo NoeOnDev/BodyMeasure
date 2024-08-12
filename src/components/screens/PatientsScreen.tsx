@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {getPatients} from '../../services/getPatientService';
 
 interface Patient {
@@ -58,6 +58,12 @@ export const PatientsScreen = (): React.JSX.Element => {
   useEffect(() => {
     fetchPatients();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchPatients();
+    }, []),
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -183,7 +189,12 @@ export const PatientsScreen = (): React.JSX.Element => {
             keyExtractor={item => item.patient_id.toString()}
             contentContainerStyle={{paddingBottom: 80}}
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={['#0078FF']}
+                tintColor="#0078FF"
+              />
             }
           />
           {selectedPatientId !== null && (
