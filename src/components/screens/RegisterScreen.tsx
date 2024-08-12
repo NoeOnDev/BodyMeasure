@@ -53,6 +53,14 @@ export const RegisterScreen = (): React.JSX.Element => {
     setPasswordVisible(!passwordVisible);
   };
 
+  const clearPersonalInfoField = (field: keyof typeof personalInfo) => {
+    setPersonalInfo({...personalInfo, [field]: ''});
+  };
+
+  const clearAccountInfoField = (field: keyof typeof accountInfo) => {
+    setAccountInfo({...accountInfo, [field]: ''});
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -73,7 +81,20 @@ export const RegisterScreen = (): React.JSX.Element => {
                 setPersonalInfo({...personalInfo, name: text})
               }
             />
+            {personalInfo.name.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => clearPersonalInfoField('name')}>
+                <Icon
+                  name="times-circle"
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={styles.inputContainer}>
             <Icon
               name="envelope"
@@ -90,7 +111,20 @@ export const RegisterScreen = (): React.JSX.Element => {
               }
               keyboardType="email-address"
             />
+            {personalInfo.email.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => clearPersonalInfoField('email')}>
+                <Icon
+                  name="times-circle"
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={styles.inputContainer}>
             <Icon
               name="phone"
@@ -107,6 +141,18 @@ export const RegisterScreen = (): React.JSX.Element => {
               }
               keyboardType="phone-pad"
             />
+            {personalInfo.phone.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => clearPersonalInfoField('phone')}>
+                <Icon
+                  name="times-circle"
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
@@ -183,13 +229,26 @@ export const RegisterScreen = (): React.JSX.Element => {
             />
             <TextInput
               style={styles.inputWithIcon}
-              placeholder="Nombre de usuario"
+              placeholder="Usuario"
               value={accountInfo.username}
               onChangeText={text =>
                 setAccountInfo({...accountInfo, username: text})
               }
             />
+            {accountInfo.username.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => clearAccountInfoField('username')}>
+                <Icon
+                  name="times-circle"
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
+
           <View style={styles.inputContainer}>
             <Icon
               name="lock"
@@ -200,8 +259,8 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Contraseña"
-              secureTextEntry={!passwordVisible}
               value={accountInfo.password}
+              secureTextEntry={!passwordVisible}
               onChangeText={text =>
                 setAccountInfo({...accountInfo, password: text})
               }
