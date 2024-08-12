@@ -8,6 +8,7 @@ import {
   Animated,
   SafeAreaView,
   ActivityIndicator,
+  RefreshControl, // Importar RefreshControl
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
@@ -24,6 +25,7 @@ const screenWidth = Dimensions.get('window').width;
 export const PatientsScreen = (): React.JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false); // Estado para el refresco
   const [error, setError] = useState<string | null>(null);
 
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
@@ -37,24 +39,30 @@ export const PatientsScreen = (): React.JSX.Element => {
   const pressAnimValue = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const data = await getPatients();
-        setPatients(data);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError(String(error));
-        }
-      } finally {
-        setLoading(false);
+  const fetchPatients = async () => {
+    try {
+      const data = await getPatients();
+      setPatients(data);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(String(error));
       }
-    };
+    } finally {
+      setLoading(false);
+      setRefreshing(false); // Finaliza la recarga
+    }
+  };
 
+  useEffect(() => {
     fetchPatients();
   }, []);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchPatients(); // Vuelve a traer los datos
+  };
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedPatientId === id) {
@@ -179,6 +187,9 @@ export const PatientsScreen = (): React.JSX.Element => {
           renderItem={renderPatient}
           keyExtractor={item => item.patient_id.toString()}
           contentContainerStyle={{paddingBottom: 80}}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
         {selectedPatientId !== null && (
           <View
