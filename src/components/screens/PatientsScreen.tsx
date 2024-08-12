@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   Animated,
+  SafeAreaView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,6 +23,11 @@ const patients: Patient[] = [
   {id: 4, name: 'Juan Pablo Pérez Rodríguez'},
   {id: 5, name: 'Laura Sofía Fernández Martínez'},
   {id: 6, name: 'Carlos Alberto Herrera González'},
+  {id: 7, name: 'María José Ramírez López'},
+  {id: 8, name: 'Ana Lucía Gómez Sánchez'},
+  {id: 9, name: 'Juan Pablo Pérez Rodríguez'},
+  {id: 10, name: 'Laura Sofía Fernández Martínez'},
+  {id: 11, name: 'Carlos Alberto Herrera González'},
 ];
 
 const screenWidth = Dimensions.get('window').width;
@@ -92,7 +98,7 @@ export const PatientsScreen = (): React.JSX.Element => {
         pressedPatientId === item.id && {transform: [{scale: pressAnimValue}]},
       ]}>
       <TouchableOpacity
-        activeOpacity={0.8}
+        activeOpacity={0.7}
         style={styles.rowContent}
         onPressIn={() => handleRowPressIn(item.id)}
         onPressOut={handleRowPressOut}
@@ -117,70 +123,85 @@ export const PatientsScreen = (): React.JSX.Element => {
   );
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={{transform: [{scale: scaleValue}]}}>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          style={styles.addButton}
-          onPressIn={handlePressIn}
-          onPressOut={handlePressOut}>
-          <Icon name="add" size={24} color="#fff" />
-          <Text style={styles.addButtonText}>Agregar</Text>
-        </TouchableOpacity>
-      </Animated.View>
-      <View style={styles.tableHeader}>
-        <View style={styles.headerIdCell}>
-          <Text style={styles.headerText}>ID</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <View style={styles.tableHeader}>
+          <View style={styles.headerIdCell}>
+            <Text style={styles.headerText}>ID</Text>
+          </View>
+          <View style={styles.headerNameCell}>
+            <Text style={styles.headerText}>Nombre del paciente</Text>
+          </View>
         </View>
-        <View style={styles.headerNameCell}>
-          <Text style={styles.headerText}>Nombre del paciente</Text>
-        </View>
-      </View>
-      <FlatList
-        data={patients}
-        renderItem={renderPatient}
-        keyExtractor={item => item.id.toString()}
-      />
-      {selectedPatientId !== null && (
-        <View
+        <FlatList
+          data={patients}
+          renderItem={renderPatient}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={{paddingBottom: 80}}
+        />
+        {selectedPatientId !== null && (
+          <View
+            style={[
+              styles.menu,
+              {
+                top: menuPosition.top,
+                left: Math.min(menuPosition.left, screenWidth - 120),
+              },
+            ]}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+              <Text style={styles.menuItemText}>Editar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+              <Text style={styles.menuItemText}>Eliminar</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        <Animated.View
           style={[
-            styles.menu,
-            {
-              top: menuPosition.top,
-              left: Math.min(menuPosition.left, screenWidth - 120),
-            },
+            styles.addButtonContainer,
+            {transform: [{scale: scaleValue}]},
           ]}>
-          <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Editar</Text>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            style={styles.addButton}
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}>
+            <Icon name="add" size={24} color="#fff" />
+            <Text style={styles.addButtonText}>Agregar</Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
-            <Text style={styles.menuItemText}>Eliminar</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-    </View>
+        </Animated.View>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
     padding: 16,
     backgroundColor: '#fff',
   },
+  addButtonContainer: {
+    position: 'absolute',
+    bottom: 30,
+    right: 20,
+  },
   addButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 15,
     backgroundColor: '#0078FF',
     borderRadius: 8,
-    marginBottom: 20,
-    alignSelf: 'flex-end',
+    elevation: 6,
   },
   addButtonText: {
     color: '#fff',
     marginLeft: 8,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'Montserrat-Bold',
   },
   tableHeader: {
@@ -214,7 +235,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 1,
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: {width: 0, height: 2},
     position: 'relative',
   },
   rowContent: {
