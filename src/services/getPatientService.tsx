@@ -25,3 +25,27 @@ export const getPatients = async () => {
     }
   }
 };
+
+export const deletePatient = async (patientId: number) => {
+  try {
+    const token = await AsyncStorage.getItem('authToken');
+
+    if (!token) {
+      throw 'No se encontró el token de autenticación';
+    }
+
+    const response = await axios.delete(`${API_URL}/patient/${patientId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw error.response?.data || 'Error al eliminar al paciente';
+    } else {
+      throw 'Error al eliminar al paciente';
+    }
+  }
+};

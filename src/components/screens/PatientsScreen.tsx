@@ -9,11 +9,12 @@ import {
   SafeAreaView,
   ActivityIndicator,
   RefreshControl,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {getPatients} from '../../services/getPatientService';
+import {getPatients, deletePatient} from '../../services/getPatientService';
 
 interface Patient {
   patient_id: number;
@@ -117,6 +118,34 @@ export const PatientsScreen = (): React.JSX.Element => {
     }
   };
 
+  const handleDeletePatient = async (
+    patientId: number,
+    patientName: string,
+  ) => {
+    Alert.alert(
+      'Eliminar Paciente',
+      `¿Estás seguro de que deseas eliminar al paciente ${patientName}?`,
+      [
+        {
+          text: 'No',
+          style: 'cancel',
+        },
+        {
+          text: 'Sí',
+          onPress: async () => {
+            try {
+              await deletePatient(patientId);
+              fetchPatients();
+            } catch (error) {
+              Alert.alert('Error', String(error));
+            }
+          },
+        },
+      ],
+      {cancelable: true},
+    );
+  };
+
   const renderPatient = ({item}: {item: Patient}) => (
     <Animated.View
       style={[
@@ -154,7 +183,7 @@ export const PatientsScreen = (): React.JSX.Element => {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator size="large" color="#0078FF" />
       </SafeAreaView>
     );
   }
@@ -209,7 +238,16 @@ export const PatientsScreen = (): React.JSX.Element => {
               <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
                 <Text style={styles.menuItemText}>Editar</Text>
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.menuItem}
+                onPress={() =>
+                  handleDeletePatient(
+                    selectedPatientId!,
+                    patients.find(p => p.patient_id === selectedPatientId)!
+                      .name,
+                  )
+                }>
                 <Text style={styles.menuItemText}>Eliminar</Text>
               </TouchableOpacity>
             </View>
