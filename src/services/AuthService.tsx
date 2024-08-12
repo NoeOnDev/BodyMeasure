@@ -1,6 +1,6 @@
-// src/services/AuthService.ts
 import axios from 'axios';
 import {API_URL} from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginDoctor = async (username: string, password: string) => {
   try {
@@ -8,6 +8,10 @@ export const loginDoctor = async (username: string, password: string) => {
       username,
       password,
     });
+
+    const token = response.data.token;
+    await AsyncStorage.setItem('authToken', token);
+
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
