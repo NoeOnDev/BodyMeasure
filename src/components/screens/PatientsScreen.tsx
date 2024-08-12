@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -7,33 +7,25 @@ import {
   Dimensions,
   Animated,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
 import {useNavigation} from '@react-navigation/native';
+import {getPatients} from '../../services/getPatientService';
 
 interface Patient {
-  id: number;
+  patient_id: number;
   name: string;
 }
-
-const patients: Patient[] = [
-  {id: 1, name: 'Carlos Alberto Herrera González'},
-  {id: 2, name: 'María José Ramírez López'},
-  {id: 3, name: 'Ana Lucía Gómez Sánchez'},
-  {id: 4, name: 'Juan Pablo Pérez Rodríguez'},
-  {id: 5, name: 'Laura Sofía Fernández Martínez'},
-  {id: 6, name: 'Carlos Alberto Herrera González'},
-  {id: 7, name: 'María José Ramírez López'},
-  {id: 8, name: 'Ana Lucía Gómez Sánchez'},
-  {id: 9, name: 'Juan Pablo Pérez Rodríguez'},
-  {id: 10, name: 'Laura Sofía Fernández Martínez'},
-  {id: 11, name: 'Carlos Alberto Herrera González'},
-];
 
 const screenWidth = Dimensions.get('window').width;
 
 export const PatientsScreen = (): React.JSX.Element => {
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
     null,
   );
@@ -44,6 +36,25 @@ export const PatientsScreen = (): React.JSX.Element => {
   const scaleValue = useRef(new Animated.Value(1)).current;
   const pressAnimValue = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const data = await getPatients();
+        setPatients(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError(String(error));
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedPatientId === id) {
@@ -96,17 +107,19 @@ export const PatientsScreen = (): React.JSX.Element => {
     <Animated.View
       style={[
         styles.row,
-        selectedPatientId === item.id && styles.selectedRow,
-        pressedPatientId === item.id && {transform: [{scale: pressAnimValue}]},
+        selectedPatientId === item.patient_id && styles.selectedRow,
+        pressedPatientId === item.patient_id && {
+          transform: [{scale: pressAnimValue}],
+        },
       ]}>
       <TouchableOpacity
         activeOpacity={0.7}
         style={styles.rowContent}
-        onPressIn={() => handleRowPressIn(item.id)}
+        onPressIn={() => handleRowPressIn(item.patient_id)}
         onPressOut={handleRowPressOut}
-        onPress={() => handleRowPress(item.id)}>
+        onPress={() => handleRowPress(item.patient_id)}>
         <View style={styles.idCell}>
-          <Text style={styles.cellText}>{item.id}</Text>
+          <Text style={styles.cellText}>{item.patient_id}</Text>
         </View>
         <View style={styles.nameCell}>
           <Text style={styles.cellText}>{item.name}</Text>
@@ -116,13 +129,39 @@ export const PatientsScreen = (): React.JSX.Element => {
           style={styles.iconCell}
           onPress={event => {
             const {pageY, pageX} = event.nativeEvent;
-            toggleMenu(item.id, pageY, pageX);
+            toggleMenu(item.patient_id, pageY, pageX);
           }}>
           <Icon name="more-vert" size={24} color="#666" />
         </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>
   );
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <Text style={styles.errorText}>{error}</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (patients.length === 0) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <Text style={styles.noPatientsText}>
+          Ups, aún no has agregado pacientes.
+        </Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -138,7 +177,7 @@ export const PatientsScreen = (): React.JSX.Element => {
         <FlatList
           data={patients}
           renderItem={renderPatient}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.patient_id.toString()}
           contentContainerStyle={{paddingBottom: 80}}
         />
         {selectedPatientId !== null && (

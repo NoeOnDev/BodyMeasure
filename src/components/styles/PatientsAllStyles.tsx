@@ -105,4 +105,16 @@ export const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Montserrat-Regular',
   },
+  errorText: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Montserrat-Regular',
+  },
+  noPatientsText: {
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Montserrat-Regular',
+  },
 });
