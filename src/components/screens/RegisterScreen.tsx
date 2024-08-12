@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/RegisterStyles';
 
 export const RegisterScreen = (): React.JSX.Element => {
@@ -28,6 +29,7 @@ export const RegisterScreen = (): React.JSX.Element => {
     username: '',
     password: '',
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const getIconColor = (value: string) => (value ? '#0078FF' : '#999');
 
@@ -47,10 +49,13 @@ export const RegisterScreen = (): React.JSX.Element => {
     }).start();
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        {/* Información personal */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información personal</Text>
           <View style={styles.inputContainer}>
@@ -107,7 +112,6 @@ export const RegisterScreen = (): React.JSX.Element => {
 
         <View style={styles.divider} />
 
-        {/* Datos físicos */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Datos físicos</Text>
 
@@ -168,7 +172,6 @@ export const RegisterScreen = (): React.JSX.Element => {
 
         <View style={styles.divider} />
 
-        {/* Información de la cuenta */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Información de la cuenta</Text>
           <View style={styles.inputContainer}>
@@ -197,12 +200,24 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Contraseña"
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
               value={accountInfo.password}
               onChangeText={text =>
                 setAccountInfo({...accountInfo, password: text})
               }
             />
+            {accountInfo.password.length > 0 && (
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={togglePasswordVisibility}>
+                <IconIonicons
+                  name={passwordVisible ? 'eye-off' : 'eye'}
+                  size={20}
+                  color="#bbb"
+                  style={styles.clearIcon}
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 

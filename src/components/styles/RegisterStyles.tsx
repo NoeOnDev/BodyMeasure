@@ -103,4 +103,8 @@ export const styles = StyleSheet.create({
     backgroundColor: '#000',
     marginVertical: 14,
   },
+  clearIcon: {
+    paddingLeft: 10,
+    paddingRight: 5,
+  },
 });
