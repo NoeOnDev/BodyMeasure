@@ -10,10 +10,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
+import {loginDoctor} from '../../services/AuthService';
+import axios from 'axios';
 
 interface LoginScreenProps {
   loginSubtitle: string;
@@ -78,6 +81,21 @@ export const LoginScreen = ({
 
   const clearUsername = () => {
     setUsername('');
+  };
+
+  const handleLogin = async () => {
+    try {
+      const data = await loginDoctor(username, password);
+      Alert.alert('Éxito', 'Inicio de sesión exitoso');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        Alert.alert('Error', error.response?.data || 'Error al iniciar sesión');
+      } else if (error instanceof Error) {
+        Alert.alert('Error', error.message);
+      } else {
+        Alert.alert('Error', 'Credenciales inválidas');
+      }
+    }
   };
 
   return (
@@ -181,7 +199,9 @@ export const LoginScreen = ({
                 activeOpacity={0.8}
                 style={styles.button}
                 onPressIn={handlePressIn}
-                onPressOut={handlePressOut}>
+                onPressOut={handlePressOut}
+                onPress={handleLogin} // Llama a la función de login
+              >
                 <Text style={styles.buttonText}>Iniciar sesión</Text>
               </TouchableOpacity>
             </Animated.View>
