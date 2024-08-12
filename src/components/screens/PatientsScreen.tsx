@@ -38,9 +38,12 @@ export const PatientsScreen = (): React.JSX.Element => {
   const pressAnimValue = useRef(new Animated.Value(1)).current;
 
   const toggleMenu = (id: number, top: number, left: number) => {
-    // Si se selecciona una nueva fila, cerrar el menú anterior
-    setSelectedPatientId(prevId => (prevId === id ? null : id));
-    setMenuPosition({top: top - 30, left});
+    if (selectedPatientId === id) {
+      setSelectedPatientId(null);
+    } else {
+      setSelectedPatientId(id);
+      setMenuPosition({top: top - 35, left});
+    }
   };
 
   const handlePressIn = () => {
@@ -60,7 +63,7 @@ export const PatientsScreen = (): React.JSX.Element => {
   const handleRowPressIn = (id: number) => {
     setPressedPatientId(id);
     Animated.timing(pressAnimValue, {
-      toValue: 0.95,
+      toValue: 0.98,
       duration: 100,
       useNativeDriver: true,
     }).start();
@@ -75,6 +78,12 @@ export const PatientsScreen = (): React.JSX.Element => {
     }).start();
   };
 
+  const handleRowPress = (id: number) => {
+    if (selectedPatientId !== id) {
+      setSelectedPatientId(null);
+    }
+  };
+
   const renderPatient = ({item}: {item: Patient}) => (
     <Animated.View
       style={[
@@ -87,8 +96,7 @@ export const PatientsScreen = (): React.JSX.Element => {
         style={styles.rowContent}
         onPressIn={() => handleRowPressIn(item.id)}
         onPressOut={handleRowPressOut}
-        onPress={() => setSelectedPatientId(item.id)} // Cambiar el color de la fila seleccionada
-      >
+        onPress={() => handleRowPress(item.id)}>
         <View style={styles.idCell}>
           <Text style={styles.cellText}>{item.id}</Text>
         </View>
@@ -96,7 +104,7 @@ export const PatientsScreen = (): React.JSX.Element => {
           <Text style={styles.cellText}>{item.name}</Text>
         </View>
         <TouchableOpacity
-          activeOpacity={0.8}
+          activeOpacity={0.7}
           style={styles.iconCell}
           onPress={event => {
             const {pageY, pageX} = event.nativeEvent;
@@ -117,7 +125,7 @@ export const PatientsScreen = (): React.JSX.Element => {
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}>
           <Icon name="add" size={24} color="#fff" />
-          <Text style={styles.addButtonText}>Agregar paciente</Text>
+          <Text style={styles.addButtonText}>Agregar</Text>
         </TouchableOpacity>
       </Animated.View>
       <View style={styles.tableHeader}>
