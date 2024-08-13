@@ -150,9 +150,6 @@ export const PatientInfoScreen = (): React.JSX.Element => {
                 left: Math.min(menuPosition.left, screenWidth - 120),
               },
             ]}>
-            <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
-              <Text style={styles.menuItemText}>Editar</Text>
-            </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.menuItem}

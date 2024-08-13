@@ -10,25 +10,6 @@ export const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
-  addButtonContainer: {
-    position: 'absolute',
-    bottom: 30,
-    right: 20,
-  },
-  addButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#0078FF',
-    borderRadius: 8,
-    elevation: 6,
-  },
-  addButtonText: {
-    color: '#fff',
-    marginLeft: 8,
-    fontSize: 18,
-    fontFamily: 'Montserrat-Bold',
-  },
   tableHeader: {
     flexDirection: 'row',
     marginBottom: 10,
@@ -103,18 +84,6 @@ export const styles = StyleSheet.create({
   menuItemText: {
     fontSize: 16,
     color: '#333',
-    fontFamily: 'Montserrat-Regular',
-  },
-  errorText: {
-    color: 'red',
-    textAlign: 'center',
-    marginTop: 20,
-    fontFamily: 'Montserrat-Regular',
-  },
-  noPatientsText: {
-    color: '#666',
-    textAlign: 'center',
-    marginTop: 20,
     fontFamily: 'Montserrat-Regular',
   },
 });

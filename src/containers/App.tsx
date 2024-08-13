@@ -23,6 +23,11 @@ const App = (): React.JSX.Element => {
           },
         }}>
         <Stack.Screen
+          name="PatientInfo"
+          component={PatientInfoScreen}
+          options={{title: 'Información del paciente'}}
+        />
+        <Stack.Screen
           name="Login"
           component={LoginSwitcher}
           options={{headerShown: false}}
@@ -41,11 +46,6 @@ const App = (): React.JSX.Element => {
           name="Register"
           component={RegisterScreen}
           options={{title: 'Registro de paciente'}}
-        />
-        <Stack.Screen
-          name="PatientInfo"
-          component={PatientInfoScreen}
-          options={{title: 'Información del paciente'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
