@@ -2,7 +2,7 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LoginSwitcher} from '../components/screens/LoginPatientAndDoctor';
-import {PatientsScreen} from '../components/screens/PatientsScreen';
+import {PatientScreen} from '../components/screens/PatientScreen';
 import {RegisterScreen} from '../components/screens/RegisterScreen';
 import {PatientDetailScreen} from '../components/screens/PatientDetailScreen';
 
@@ -29,7 +29,7 @@ const App = (): React.JSX.Element => {
         />
         <Stack.Screen
           name="Patients"
-          component={PatientsScreen}
+          component={PatientScreen}
           options={{
             title: 'Mis pacientes',
             headerBackButtonMenuEnabled: false,

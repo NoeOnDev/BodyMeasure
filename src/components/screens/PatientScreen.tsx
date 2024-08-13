@@ -23,7 +23,7 @@ interface Patient {
 
 const screenWidth = Dimensions.get('window').width;
 
-export const PatientsScreen = (): React.JSX.Element => {
+export const PatientScreen = (): React.JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
