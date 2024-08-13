@@ -10,41 +10,45 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../styles/PatientsAllStyles';
+import {styles} from '../styles/PatientInfoStyles';
 
-interface Patient {
-  patient_id: number;
-  name: string;
+interface Diagnosis {
+  historial_id: number;
+  diagnosisDate: string;
+  diagnosisTime: string;
 }
 
 const screenWidth = Dimensions.get('window').width;
 
 export const PatientInfoScreen = (): React.JSX.Element => {
-  const [patients, setPatients] = useState<Patient[]>([
-    {patient_id: 1, name: 'John Doe'},
-    {patient_id: 2, name: 'Jane Smith'},
-    {patient_id: 3, name: 'Alice Johnson'},
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([
+    {historial_id: 1, diagnosisDate: '2024-08-12', diagnosisTime: '10:00 AM'},
+    {historial_id: 2, diagnosisDate: '2024-08-11', diagnosisTime: '02:30 PM'},
+    {historial_id: 3, diagnosisDate: '2024-08-10', diagnosisTime: '09:15 AM'},
   ]);
-  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
+
+  const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
     null,
   );
-  const [pressedPatientId, setPressedPatientId] = useState<number | null>(null);
+  const [pressedDiagnosisId, setPressedDiagnosisId] = useState<number | null>(
+    null,
+  );
   const [menuPosition, setMenuPosition] = useState<{top: number; left: number}>(
     {top: 0, left: 0},
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
 
   const toggleMenu = (id: number, top: number, left: number) => {
-    if (selectedPatientId === id) {
-      setSelectedPatientId(null);
+    if (selectedDiagnosisId === id) {
+      setSelectedDiagnosisId(null);
     } else {
-      setSelectedPatientId(id);
+      setSelectedDiagnosisId(id);
       setMenuPosition({top: top - 35, left});
     }
   };
 
   const handleRowPressIn = (id: number) => {
-    setPressedPatientId(id);
+    setPressedDiagnosisId(id);
     Animated.timing(pressAnimValue, {
       toValue: 0.98,
       duration: 100,
@@ -53,7 +57,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   };
 
   const handleRowPressOut = () => {
-    setPressedPatientId(null);
+    setPressedDiagnosisId(null);
     Animated.timing(pressAnimValue, {
       toValue: 1,
       duration: 100,
@@ -62,15 +66,15 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   };
 
   const handleRowPress = (id: number) => {
-    if (selectedPatientId !== id) {
-      setSelectedPatientId(null);
+    if (selectedDiagnosisId !== id) {
+      setSelectedDiagnosisId(null);
     }
   };
 
-  const handleDeletePatient = (patientId: number, patientName: string) => {
+  const handleDeleteDiagnosis = (historialId: number) => {
     Alert.alert(
-      'Eliminar Paciente',
-      `¿Estás seguro de que deseas eliminar al paciente ${patientName}?`,
+      'Eliminar Diagnóstico',
+      '¿Estás seguro de que deseas eliminar este diagnóstico?',
       [
         {
           text: 'No',
@@ -79,10 +83,12 @@ export const PatientInfoScreen = (): React.JSX.Element => {
         {
           text: 'Sí',
           onPress: () => {
-            setPatients(prevPatients =>
-              prevPatients.filter(patient => patient.patient_id !== patientId),
+            setDiagnoses(prevDiagnoses =>
+              prevDiagnoses.filter(
+                diagnosis => diagnosis.historial_id !== historialId,
+              ),
             );
-            setSelectedPatientId(null);
+            setSelectedDiagnosisId(null);
           },
         },
       ],
@@ -90,33 +96,33 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     );
   };
 
-  const renderPatient = ({item}: {item: Patient}) => (
+  const renderDiagnosis = ({item}: {item: Diagnosis}) => (
     <Animated.View
       style={[
         styles.row,
-        selectedPatientId === item.patient_id && styles.selectedRow,
-        pressedPatientId === item.patient_id && {
+        selectedDiagnosisId === item.historial_id && styles.selectedRow,
+        pressedDiagnosisId === item.historial_id && {
           transform: [{scale: pressAnimValue}],
         },
       ]}>
       <TouchableOpacity
         activeOpacity={0.7}
         style={styles.rowContent}
-        onPressIn={() => handleRowPressIn(item.patient_id)}
+        onPressIn={() => handleRowPressIn(item.historial_id)}
         onPressOut={handleRowPressOut}
-        onPress={() => handleRowPress(item.patient_id)}>
-        <View style={styles.idCell}>
-          <Text style={styles.cellText}>{item.patient_id}</Text>
+        onPress={() => handleRowPress(item.historial_id)}>
+        <View style={styles.diagnosisDateCell}>
+          <Text style={styles.cellText}>{item.diagnosisDate}</Text>
         </View>
-        <View style={styles.nameCell}>
-          <Text style={styles.cellText}>{item.name}</Text>
+        <View style={styles.diagnosisTimeCell}>
+          <Text style={styles.cellText}>{item.diagnosisTime}</Text>
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.iconCell}
           onPress={event => {
             const {pageY, pageX} = event.nativeEvent;
-            toggleMenu(item.patient_id, pageY, pageX);
+            toggleMenu(item.historial_id, pageY, pageX);
           }}>
           <Icon name="more-vert" size={24} color="#666" />
         </TouchableOpacity>
@@ -128,20 +134,20 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <View style={styles.tableHeader}>
-          <View style={styles.headerIdCell}>
-            <Text style={styles.headerText}>ID</Text>
+          <View style={styles.headerDateCell}>
+            <Text style={styles.headerText}>Fecha</Text>
           </View>
-          <View style={styles.headerNameCell}>
-            <Text style={styles.headerText}>Nombre del paciente</Text>
+          <View style={styles.headerTimeCell}>
+            <Text style={styles.headerText}>Hora del Diagnóstico</Text>
           </View>
         </View>
         <FlatList
-          data={patients}
-          renderItem={renderPatient}
-          keyExtractor={item => item.patient_id.toString()}
+          data={diagnoses}
+          renderItem={renderDiagnosis}
+          keyExtractor={item => item.historial_id.toString()}
           contentContainerStyle={{paddingBottom: 80}}
         />
-        {selectedPatientId !== null && (
+        {selectedDiagnosisId !== null && (
           <View
             style={[
               styles.menu,
@@ -153,12 +159,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.menuItem}
-              onPress={() =>
-                handleDeletePatient(
-                  selectedPatientId!,
-                  patients.find(p => p.patient_id === selectedPatientId)!.name,
-                )
-              }>
+              onPress={() => handleDeleteDiagnosis(selectedDiagnosisId!)}>
               <Text style={styles.menuItemText}>Eliminar</Text>
             </TouchableOpacity>
           </View>

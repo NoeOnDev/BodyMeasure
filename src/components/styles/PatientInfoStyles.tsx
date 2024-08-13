@@ -20,11 +20,24 @@ export const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     borderTopLeftRadius: 8,
   },
-  headerNameCell: {
+  headerDateCell: {
+    flex: 4,
+    padding: 10,
+    backgroundColor: '#f0f0f0',
+  },
+  headerTimeCell: {
     flex: 6,
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderTopRightRadius: 8,
+  },
+  diagnosisDateCell: {
+    flex: 4,
+    padding: 16,
+  },
+  diagnosisTimeCell: {
+    flex: 2,
+    padding: 16,
   },
   headerText: {
     fontSize: 16,
