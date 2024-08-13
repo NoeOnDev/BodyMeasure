@@ -50,7 +50,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
       setSelectedDiagnosisId(null);
     } else {
       setSelectedDiagnosisId(id);
-      setMenuPosition({top: top - 50, left});
+      setMenuPosition({top: top - 60, left});
     }
   };
 
@@ -194,7 +194,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
             renderItem={renderDiagnosis}
             keyExtractor={item => item.historial_id.toString()}
             contentContainerStyle={{paddingBottom: 50}}
-            style={{maxHeight: 385}}
+            style={{maxHeight: 395}}
           />
           {selectedDiagnosisId !== null && (
             <View

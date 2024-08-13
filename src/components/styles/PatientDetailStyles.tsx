@@ -112,13 +112,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
-    width: '100%',
+    padding: 6,
   },
   infoColumnOne: {
-    flex: 3,
+    flex: 8,
   },
   infoColumnTwo: {
-    flex: 1,
+    flex: 2,
   },
   infoRow: {
     marginBottom: 15,
@@ -130,7 +130,7 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
   },
   infoValue: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#333',
     fontFamily: 'Montserrat-Bold',
   },
