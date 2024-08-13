@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
     zIndex: 1,
   },
   menuItem: {
-    padding: 16,
+    padding: 12,
   },
   menuItemText: {
     fontSize: 16,

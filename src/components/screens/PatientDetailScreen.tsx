@@ -202,7 +202,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
                 styles.menu,
                 {
                   top: menuPosition.top,
-                  left: Math.min(menuPosition.left, screenWidth - 140),
+                  left: Math.min(menuPosition.left, screenWidth - 150),
                 },
               ]}>
               <TouchableOpacity
