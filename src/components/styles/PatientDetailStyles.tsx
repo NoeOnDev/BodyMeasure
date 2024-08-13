@@ -10,20 +10,32 @@ export const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: '#fff',
   },
+  boxShadow: {
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 4,
+    borderRadius: 8,
+    padding: 24,
+    backgroundColor: '#fff',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    marginTop: 16,
+    marginBottom: 18,
+    color: '#333',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Bold',
+  },
   tableHeader: {
     flexDirection: 'row',
     marginBottom: 10,
-  },
-  headerIdCell: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: '#f0f0f0',
-    borderTopLeftRadius: 8,
   },
   headerDateCell: {
     flex: 4,
     padding: 10,
     backgroundColor: '#f0f0f0',
+    borderTopLeftRadius: 8,
   },
   headerTimeCell: {
     flex: 6,
@@ -32,11 +44,11 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   diagnosisDateCell: {
-    flex: 2,
+    flex: 4,
     padding: 16,
   },
   diagnosisTimeCell: {
-    flex: 2.2,
+    flex: 4.3,
     padding: 16,
   },
   headerText: {
@@ -65,14 +77,6 @@ export const styles = StyleSheet.create({
   selectedRow: {
     backgroundColor: '#e0e0e0',
   },
-  idCell: {
-    flex: 1,
-    padding: 16,
-  },
-  nameCell: {
-    flex: 6,
-    padding: 16,
-  },
   iconCell: {
     padding: 16,
   },
@@ -98,5 +102,36 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     fontFamily: 'Montserrat-Regular',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#000',
+    marginVertical: 14,
+  },
+  patientInfoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    width: '100%',
+  },
+  infoColumnOne: {
+    flex: 3,
+  },
+  infoColumnTwo: {
+    flex: 1,
+  },
+  infoRow: {
+    marginBottom: 15,
+  },
+  infoLabel: {
+    fontSize: 14,
+    color: '#888',
+    marginBottom: 5,
+    fontFamily: 'Montserrat-Regular',
+  },
+  infoValue: {
+    fontSize: 16,
+    color: '#333',
+    fontFamily: 'Montserrat-Bold',
   },
 });

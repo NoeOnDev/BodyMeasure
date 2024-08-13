@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../styles/PatientInfoStyles';
+import {styles} from '../styles/PatientDetailStyles';
 
 interface Diagnosis {
   historial_id: number;
@@ -25,6 +25,13 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     {historial_id: 1, diagnosisDate: '2024-08-12', diagnosisTime: '10:00 AM'},
     {historial_id: 2, diagnosisDate: '2024-08-11', diagnosisTime: '02:30 PM'},
     {historial_id: 3, diagnosisDate: '2024-08-10', diagnosisTime: '09:15 AM'},
+    {historial_id: 4, diagnosisDate: '2024-08-09', diagnosisTime: '11:45 AM'},
+    {historial_id: 5, diagnosisDate: '2024-08-08', diagnosisTime: '03:00 PM'},
+    {historial_id: 6, diagnosisDate: '2024-08-07', diagnosisTime: '08:30 AM'},
+    {historial_id: 7, diagnosisDate: '2024-08-06', diagnosisTime: '01:00 PM'},
+    {historial_id: 8, diagnosisDate: '2024-08-05', diagnosisTime: '10:45 AM'},
+    {historial_id: 9, diagnosisDate: '2024-08-04', diagnosisTime: '02:00 PM'},
+    {historial_id: 10, diagnosisDate: '2024-08-03', diagnosisTime: '09:30 AM'},
   ]);
 
   const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
@@ -43,7 +50,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
       setSelectedDiagnosisId(null);
     } else {
       setSelectedDiagnosisId(id);
-      setMenuPosition({top: top - 35, left});
+      setMenuPosition({top: top - 50, left});
     }
   };
 
@@ -96,6 +103,43 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     );
   };
 
+  const PatientInfo = () => {
+    return (
+      <View style={styles.patientInfoContainer}>
+        <View style={styles.infoColumnOne}>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Nombre</Text>
+            <Text style={styles.infoValue}>
+              Carlos Alberto Herrera González
+            </Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Teléfono</Text>
+            <Text style={styles.infoValue}>9612883712</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Correo electrónico</Text>
+            <Text style={styles.infoValue}>CarlosA@gmail.com</Text>
+          </View>
+        </View>
+        <View style={styles.infoColumnTwo}>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Edad</Text>
+            <Text style={styles.infoValue}>24 años</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Sexo</Text>
+            <Text style={styles.infoValue}>Hombre</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Altura</Text>
+            <Text style={styles.infoValue}>172 cm</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   const renderDiagnosis = ({item}: {item: Diagnosis}) => (
     <Animated.View
       style={[
@@ -133,37 +177,43 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <View style={styles.tableHeader}>
-          <View style={styles.headerDateCell}>
-            <Text style={styles.headerText}>Fecha</Text>
+        <View style={styles.boxShadow}>
+          <PatientInfo />
+          <View style={styles.divider} />
+          <Text style={styles.sectionTitle}>Historial de Diagnósticos</Text>
+          <View style={styles.tableHeader}>
+            <View style={styles.headerDateCell}>
+              <Text style={styles.headerText}>Fecha</Text>
+            </View>
+            <View style={styles.headerTimeCell}>
+              <Text style={styles.headerText}>Hora del Diagnóstico</Text>
+            </View>
           </View>
-          <View style={styles.headerTimeCell}>
-            <Text style={styles.headerText}>Hora del Diagnóstico</Text>
-          </View>
+          <FlatList
+            data={diagnoses}
+            renderItem={renderDiagnosis}
+            keyExtractor={item => item.historial_id.toString()}
+            contentContainerStyle={{paddingBottom: 50}}
+            style={{maxHeight: 385}}
+          />
+          {selectedDiagnosisId !== null && (
+            <View
+              style={[
+                styles.menu,
+                {
+                  top: menuPosition.top,
+                  left: Math.min(menuPosition.left, screenWidth - 140),
+                },
+              ]}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.menuItem}
+                onPress={() => handleDeleteDiagnosis(selectedDiagnosisId!)}>
+                <Text style={styles.menuItemText}>Eliminar</Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-        <FlatList
-          data={diagnoses}
-          renderItem={renderDiagnosis}
-          keyExtractor={item => item.historial_id.toString()}
-          contentContainerStyle={{paddingBottom: 80}}
-        />
-        {selectedDiagnosisId !== null && (
-          <View
-            style={[
-              styles.menu,
-              {
-                top: menuPosition.top,
-                left: Math.min(menuPosition.left, screenWidth - 120),
-              },
-            ]}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.menuItem}
-              onPress={() => handleDeleteDiagnosis(selectedDiagnosisId!)}>
-              <Text style={styles.menuItemText}>Eliminar</Text>
-            </TouchableOpacity>
-          </View>
-        )}
       </View>
     </SafeAreaView>
   );
