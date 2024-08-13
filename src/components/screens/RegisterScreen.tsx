@@ -15,6 +15,11 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/RegisterStyles';
 import {registerPatient} from '../../services/PatientService';
 import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+type RootStackParamList = {
+  Patients: undefined;
+};
 
 export const RegisterScreen = (): React.JSX.Element => {
   const [personalInfo, setPersonalInfo] = useState({
@@ -34,7 +39,8 @@ export const RegisterScreen = (): React.JSX.Element => {
   });
   const [passwordVisible, setPasswordVisible] = useState(false);
 
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const getIconColor = (value: string) => (value ? '#0078FF' : '#999');
 

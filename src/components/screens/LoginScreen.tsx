@@ -12,6 +12,7 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
@@ -27,6 +28,10 @@ interface LoginScreenProps {
   userType: 'Patient' | 'Doctor';
 }
 
+type RootStackParamList = {
+  Patients: undefined;
+};
+
 export const LoginScreen = ({
   loginSubtitle,
   navigateTo,
@@ -35,7 +40,8 @@ export const LoginScreen = ({
   slideInAnimation,
   userType,
 }: LoginScreenProps): React.JSX.Element => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const scaleValue = useRef(new Animated.Value(1)).current;
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [username, setUsername] = useState('');

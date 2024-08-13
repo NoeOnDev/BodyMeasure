@@ -81,7 +81,7 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   cellText: {
-    fontSize: 18,
+    fontSize: 17,
     fontFamily: 'Montserrat-Regular',
   },
   menu: {
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
     padding: 6,
   },
   infoColumnOne: {
-    flex: 8,
+    flex: 7,
   },
   infoColumnTwo: {
     flex: 2,

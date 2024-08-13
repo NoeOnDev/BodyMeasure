@@ -15,11 +15,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientsAllStyles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {getPatients, deletePatient} from '../../services/PatientService';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 interface Patient {
   patient_id: number;
   name: string;
 }
+
+type RootStackParamList = {
+  PatientDetail: {patientDetails: Patient};
+  Register: undefined;
+};
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -38,7 +44,9 @@ export const PatientScreen = (): React.JSX.Element => {
   );
   const scaleValue = useRef(new Animated.Value(1)).current;
   const pressAnimValue = useRef(new Animated.Value(1)).current;
-  const navigation = useNavigation();
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const fetchPatients = async () => {
     try {
@@ -115,7 +123,7 @@ export const PatientScreen = (): React.JSX.Element => {
   const handleRowPress = (id: number) => {
     const patient = patients.find(p => p.patient_id === id);
     if (patient) {
-      navigation.navigate('PatientDetail');
+      navigation.navigate('PatientDetail', {patientDetails: patient});
     }
   };
 

@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Alert,
 } from 'react-native';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
 
@@ -17,6 +18,19 @@ interface Diagnosis {
   diagnosisDate: string;
   diagnosisTime: string;
 }
+
+interface PatientDetails {
+  name: string;
+  phone: string;
+  email: string;
+  age: number;
+  sex: string;
+  height: number;
+}
+
+export type RootStackParamList = {
+  PatientDetail: {patientDetails: PatientDetails};
+};
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -33,6 +47,9 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     {historial_id: 9, diagnosisDate: '2024-08-04', diagnosisTime: '02:00 PM'},
     {historial_id: 10, diagnosisDate: '2024-08-03', diagnosisTime: '09:30 AM'},
   ]);
+
+  const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
+  const {patientDetails} = route.params;
 
   const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
     null,
@@ -109,31 +126,29 @@ export const PatientDetailScreen = (): React.JSX.Element => {
         <View style={styles.infoColumnOne}>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Nombre</Text>
-            <Text style={styles.infoValue}>
-              Carlos Alberto Herrera González
-            </Text>
+            <Text style={styles.infoValue}>{patientDetails.name}</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Teléfono</Text>
-            <Text style={styles.infoValue}>9612883712</Text>
+            <Text style={styles.infoValue}>{patientDetails.phone}</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Correo electrónico</Text>
-            <Text style={styles.infoValue}>CarlosA@gmail.com</Text>
+            <Text style={styles.infoValue}>{patientDetails.email}</Text>
           </View>
         </View>
         <View style={styles.infoColumnTwo}>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Edad</Text>
-            <Text style={styles.infoValue}>24 años</Text>
+            <Text style={styles.infoValue}>{patientDetails.age} años</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Sexo</Text>
-            <Text style={styles.infoValue}>Hombre</Text>
+            <Text style={styles.infoValue}>{patientDetails.sex}</Text>
           </View>
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Altura</Text>
-            <Text style={styles.infoValue}>172 cm</Text>
+            <Text style={styles.infoValue}>{patientDetails.height} cm</Text>
           </View>
         </View>
       </View>
