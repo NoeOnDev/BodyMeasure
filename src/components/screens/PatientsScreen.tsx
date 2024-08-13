@@ -187,7 +187,7 @@ export const PatientsScreen = (): React.JSX.Element => {
         <ActivityIndicator size="large" color="#0078FF" />
       </SafeAreaView>
     );
-  }
+  } 
 
   if (error) {
     return (

@@ -32,11 +32,11 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   diagnosisDateCell: {
-    flex: 4,
+    flex: 2,
     padding: 16,
   },
   diagnosisTimeCell: {
-    flex: 2,
+    flex: 2.2,
     padding: 16,
   },
   headerText: {
