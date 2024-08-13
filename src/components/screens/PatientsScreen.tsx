@@ -113,8 +113,9 @@ export const PatientsScreen = (): React.JSX.Element => {
   };
 
   const handleRowPress = (id: number) => {
-    if (selectedPatientId !== id) {
-      setSelectedPatientId(null);
+    const patient = patients.find(p => p.patient_id === id);
+    if (patient) {
+      navigation.navigate('PatientDetail');
     }
   };
 
@@ -187,7 +188,7 @@ export const PatientsScreen = (): React.JSX.Element => {
         <ActivityIndicator size="large" color="#0078FF" />
       </SafeAreaView>
     );
-  } 
+  }
 
   if (error) {
     return (

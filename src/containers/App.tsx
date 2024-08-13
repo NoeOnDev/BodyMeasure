@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {LoginSwitcher} from '../components/screens/LoginPatientAndDoctor';
 import {PatientsScreen} from '../components/screens/PatientsScreen';
 import {RegisterScreen} from '../components/screens/RegisterScreen';
-import {PatientInfoScreen} from '../components/screens/PatientInfoScreen';
+import {PatientDetailScreen} from '../components/screens/PatientDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,8 +43,8 @@ const App = (): React.JSX.Element => {
           options={{title: 'Registro de paciente'}}
         />
         <Stack.Screen
-          name="PatientInfo"
-          component={PatientInfoScreen}
+          name="PatientDetail"
+          component={PatientDetailScreen}
           options={{title: 'Información del paciente'}}
         />
       </Stack.Navigator>

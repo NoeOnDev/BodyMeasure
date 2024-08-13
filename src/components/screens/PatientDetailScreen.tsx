@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -20,7 +20,7 @@ interface Diagnosis {
 
 const screenWidth = Dimensions.get('window').width;
 
-export const PatientInfoScreen = (): React.JSX.Element => {
+export const PatientDetailScreen = (): React.JSX.Element => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([
     {historial_id: 1, diagnosisDate: '2024-08-12', diagnosisTime: '10:00 AM'},
     {historial_id: 2, diagnosisDate: '2024-08-11', diagnosisTime: '02:30 PM'},
