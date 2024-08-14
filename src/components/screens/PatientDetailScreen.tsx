@@ -35,18 +35,7 @@ export type RootStackParamList = {
 const screenWidth = Dimensions.get('window').width;
 
 export const PatientDetailScreen = (): React.JSX.Element => {
-  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([
-    {historial_id: 1, diagnosisDate: '2024-08-12', diagnosisTime: '10:00 AM'},
-    {historial_id: 2, diagnosisDate: '2024-08-11', diagnosisTime: '02:30 PM'},
-    {historial_id: 3, diagnosisDate: '2024-08-10', diagnosisTime: '09:15 AM'},
-    {historial_id: 4, diagnosisDate: '2024-08-09', diagnosisTime: '11:45 AM'},
-    {historial_id: 5, diagnosisDate: '2024-08-08', diagnosisTime: '03:00 PM'},
-    {historial_id: 6, diagnosisDate: '2024-08-07', diagnosisTime: '08:30 AM'},
-    {historial_id: 7, diagnosisDate: '2024-08-06', diagnosisTime: '01:00 PM'},
-    {historial_id: 8, diagnosisDate: '2024-08-05', diagnosisTime: '10:45 AM'},
-    {historial_id: 9, diagnosisDate: '2024-08-04', diagnosisTime: '02:00 PM'},
-    {historial_id: 10, diagnosisDate: '2024-08-03', diagnosisTime: '09:30 AM'},
-  ]);
+  const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
   const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
   const {patientDetails} = route.params;
@@ -196,21 +185,29 @@ export const PatientDetailScreen = (): React.JSX.Element => {
           <PatientInfo />
           <View style={styles.divider} />
           <Text style={styles.sectionTitle}>Historial de Diagnósticos</Text>
-          <View style={styles.tableHeader}>
-            <View style={styles.headerDateCell}>
-              <Text style={styles.headerText}>Fecha</Text>
-            </View>
-            <View style={styles.headerTimeCell}>
-              <Text style={styles.headerText}>Hora del Diagnóstico</Text>
-            </View>
-          </View>
-          <FlatList
-            data={diagnoses}
-            renderItem={renderDiagnosis}
-            keyExtractor={item => item.historial_id.toString()}
-            contentContainerStyle={{paddingBottom: 50}}
-            style={{maxHeight: 395}}
-          />
+          {diagnoses.length === 0 ? (
+            <Text style={styles.noDiagnosesText}>
+              Ups, parece que aún no tiene diagnósticos en el historial.
+            </Text>
+          ) : (
+            <>
+              <View style={styles.tableHeader}>
+                <View style={styles.headerDateCell}>
+                  <Text style={styles.headerText}>Fecha</Text>
+                </View>
+                <View style={styles.headerTimeCell}>
+                  <Text style={styles.headerText}>Hora del Diagnóstico</Text>
+                </View>
+              </View>
+              <FlatList
+                data={diagnoses}
+                renderItem={renderDiagnosis}
+                keyExtractor={item => item.historial_id.toString()}
+                contentContainerStyle={{paddingBottom: 50}}
+                style={{maxHeight: 395}}
+              />
+            </>
+          )}
           {selectedDiagnosisId !== null && (
             <View
               style={[

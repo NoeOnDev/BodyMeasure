@@ -134,4 +134,10 @@ export const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Montserrat-Bold',
   },
+  noDiagnosesText: {
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+    fontFamily: 'Montserrat-Regular',
+  },
 });
