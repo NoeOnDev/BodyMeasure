@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,12 @@ import {
   Animated,
   SafeAreaView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
+import {getPatientData} from '../../services/PatientService';
 
 interface Diagnosis {
   historial_id: number;
@@ -28,18 +30,14 @@ interface PatientDetails {
   height: number;
 }
 
-export type RootStackParamList = {
-  PatientDetail: {patientDetails: PatientDetails};
-};
-
 const screenWidth = Dimensions.get('window').width;
 
 export const PatientInfoScreen = (): React.JSX.Element => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
-
-  const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
-  const {patientDetails} = route.params;
-
+  const [patientDetails, setPatientDetails] = useState<PatientDetails | null>(
+    null,
+  );
+  const [loading, setLoading] = useState(true);
   const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
     null,
   );
@@ -50,6 +48,35 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     {top: 0, left: 0},
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchPatientData = async () => {
+      try {
+        const data = await getPatientData();
+        setPatientDetails(data);
+        // Si el paciente tiene diagnósticos, puedes asignarlos a `diagnoses`
+        // setDiagnoses(data.diagnoses); // si los diagnósticos están en la respuesta
+      } catch (error) {
+        Alert.alert('Error', (error as Error).message);
+        navigation.goBack();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatientData();
+  }, []);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedDiagnosisId === id) {
@@ -110,6 +137,8 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   };
 
   const PatientInfo = () => {
+    if (!patientDetails) return null;
+
     return (
       <View style={styles.patientInfoContainer}>
         <View style={styles.infoColumnOne}>
@@ -220,8 +249,16 @@ export const PatientInfoScreen = (): React.JSX.Element => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.menuItem}
-                onPress={() => handleDeleteDiagnosis(selectedDiagnosisId!)}>
-                <Text style={styles.menuItemText}>Eliminar</Text>
+                onPress={() => {
+                  Alert.alert('Ver Diagnóstico', 'Funcionalidad pendiente...');
+                }}>
+                <Text style={styles.menuItemText}>Ver Diagnóstico</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.menuItem}
+                onPress={() => handleDeleteDiagnosis(selectedDiagnosisId)}>
+                <Text style={styles.menuItemText}>Eliminar Diagnóstico</Text>
               </TouchableOpacity>
             </View>
           )}

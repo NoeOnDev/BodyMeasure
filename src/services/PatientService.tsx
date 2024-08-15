@@ -85,3 +85,30 @@ export const deletePatient = async (patientId: number) => {
     }
   }
 };
+
+export const getPatientData = async () => {
+  try {
+    const token = await AsyncStorage.getItem('authToken');
+
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await axios.get(`${API_URL}/patient`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.message ||
+        'Error al obtener los datos del paciente';
+      throw new Error(errorMessage);
+    } else {
+      throw new Error('Error al obtener los datos del paciente');
+    }
+  }
+};

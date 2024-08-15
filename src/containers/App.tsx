@@ -5,6 +5,7 @@ import {LoginSwitcher} from '../components/screens/LoginPatientAndDoctor';
 import {PatientScreen} from '../components/screens/PatientScreen';
 import {RegisterScreen} from '../components/screens/RegisterScreen';
 import {PatientDetailScreen} from '../components/screens/PatientDetailScreen';
+import {PatientInfoScreen} from '../components/screens/PatientInfoScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ const App = (): React.JSX.Element => {
         <Stack.Screen
           name="PatientDetail"
           component={PatientDetailScreen}
+          options={{title: 'Información del paciente'}}
+        />
+        <Stack.Screen
+          name="PatientInfo"
+          component={PatientInfoScreen}
           options={{title: 'Información del paciente'}}
         />
       </Stack.Navigator>
