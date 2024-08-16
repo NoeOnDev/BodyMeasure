@@ -249,16 +249,8 @@ export const PatientInfoScreen = (): React.JSX.Element => {
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.menuItem}
-                onPress={() => {
-                  Alert.alert('Ver Diagnóstico', 'Funcionalidad pendiente...');
-                }}>
-                <Text style={styles.menuItemText}>Ver Diagnóstico</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.menuItem}
                 onPress={() => handleDeleteDiagnosis(selectedDiagnosisId)}>
-                <Text style={styles.menuItemText}>Eliminar Diagnóstico</Text>
+                <Text style={styles.menuItemText}>Eliminar</Text>
               </TouchableOpacity>
             </View>
           )}
