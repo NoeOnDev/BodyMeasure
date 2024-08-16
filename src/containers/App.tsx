@@ -51,7 +51,12 @@ const App = (): React.JSX.Element => {
         <Stack.Screen
           name="PatientInfo"
           component={PatientInfoScreen}
-          options={{title: 'Información del paciente'}}
+          options={{
+            title: 'Información del paciente',
+            headerBackButtonMenuEnabled: false,
+            headerBackVisible: false,
+            headerLeft: () => null,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
