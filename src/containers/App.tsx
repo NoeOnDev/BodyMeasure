@@ -6,6 +6,7 @@ import {PatientScreen} from '../components/screens/PatientScreen';
 import {RegisterScreen} from '../components/screens/RegisterScreen';
 import {PatientDetailScreen} from '../components/screens/PatientDetailScreen';
 import {PatientInfoScreen} from '../components/screens/PatientInfoScreen';
+import {HistoryPatientScreen} from '../components/screens/HistoryPatientScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -56,6 +57,13 @@ const App = (): React.JSX.Element => {
             headerBackButtonMenuEnabled: false,
             headerBackVisible: false,
             headerLeft: () => null,
+          }}
+        />
+        <Stack.Screen
+          name="History"
+          component={HistoryPatientScreen}
+          options={{
+            title: 'Historial del diagnóstico',
           }}
         />
       </Stack.Navigator>

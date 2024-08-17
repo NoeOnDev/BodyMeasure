@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   section: {},
   sectionTitle: {
     fontSize: 20,
-    marginTop: 16,
+    marginTop: 10,
     marginBottom: 18,
     color: '#333',
     textAlign: 'center',

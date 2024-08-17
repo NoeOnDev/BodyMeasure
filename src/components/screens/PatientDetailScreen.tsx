@@ -10,15 +10,17 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
 import {getPatientHistoryById} from '../../services/PatientService';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 interface Diagnosis {
   history_id: number;
   diagnosisDate: string;
   diagnosisTime: string;
+  doctorName: string;
 }
 
 interface PatientDetails {
@@ -33,11 +35,20 @@ interface PatientDetails {
 
 export type RootStackParamList = {
   PatientDetail: {patientDetails: PatientDetails};
+  History: {
+    patientName: string;
+    doctorName: string;
+    date: string;
+    time: string;
+    age: number;
+    sex: string;
+    height: number;
+  };
 };
 
 const screenWidth = Dimensions.get('window').width;
 
-const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: string): string => {
   if (!dateString) return 'Fecha inválida';
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return 'Fecha inválida';
@@ -65,6 +76,8 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     {top: 0, left: 0},
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     const fetchPatientHistory = async () => {
@@ -74,6 +87,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
           history_id: diagnosis.history_id,
           diagnosisDate: diagnosis.date,
           diagnosisTime: diagnosis.time,
+          doctorName: diagnosis.doctor_name,
         }));
         setDiagnoses(formattedData);
       } catch (error) {
@@ -118,8 +132,19 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   };
 
   const handleRowPress = (id: number) => {
-    if (selectedDiagnosisId !== id) {
-      setSelectedDiagnosisId(null);
+    const selectedHistory = diagnoses.find(
+      diagnosis => diagnosis.history_id === id,
+    );
+    if (selectedHistory) {
+      navigation.navigate('History', {
+        patientName: patientDetails.name,
+        doctorName: selectedHistory.doctorName,
+        date: selectedHistory.diagnosisDate,
+        time: selectedHistory.diagnosisTime,
+        age: patientDetails.age,
+        sex: patientDetails.sex,
+        height: patientDetails.height,
+      });
     }
   };
 
