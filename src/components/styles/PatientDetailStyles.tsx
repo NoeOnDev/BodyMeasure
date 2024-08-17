@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     elevation: 4,
     borderRadius: 8,
-    padding: 24,
+    padding: 16,
     backgroundColor: '#fff',
   },
   sectionTitle: {

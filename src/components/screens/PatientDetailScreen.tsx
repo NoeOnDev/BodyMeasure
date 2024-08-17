@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   Alert,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -61,6 +62,7 @@ export const formatDate = (dateString: string): string => {
 export const PatientDetailScreen = (): React.JSX.Element => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
@@ -79,30 +81,36 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  useEffect(() => {
-    const fetchPatientHistory = async () => {
-      try {
-        const data = await getPatientHistoryById(patientDetails.patient_id);
-        const formattedData = data.map((diagnosis: any) => ({
-          history_id: diagnosis.history_id,
-          diagnosisDate: diagnosis.date,
-          diagnosisTime: diagnosis.time,
-          doctorName: diagnosis.doctor_name,
-        }));
-        setDiagnoses(formattedData);
-      } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError('Error al obtener el historial del paciente');
-        }
-      } finally {
-        setLoading(false);
+  const fetchPatientHistory = async () => {
+    try {
+      const data = await getPatientHistoryById(patientDetails.patient_id);
+      const formattedData = data.map((diagnosis: any) => ({
+        history_id: diagnosis.history_id,
+        diagnosisDate: diagnosis.date,
+        diagnosisTime: diagnosis.time,
+        doctorName: diagnosis.doctor_name,
+      }));
+      setDiagnoses(formattedData);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError('Error al obtener el historial del paciente');
       }
-    };
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
 
+  useEffect(() => {
     fetchPatientHistory();
   }, [patientDetails.patient_id]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    fetchPatientHistory();
+  };
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedDiagnosisId === id) {
@@ -247,7 +255,9 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   if (loading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <ActivityIndicator size="large" color="#0078FF" />
+        <View style={styles.container}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       </SafeAreaView>
     );
   }
@@ -287,6 +297,14 @@ export const PatientDetailScreen = (): React.JSX.Element => {
                 keyExtractor={item => item.history_id.toString()}
                 contentContainerStyle={{paddingBottom: 50}}
                 style={{maxHeight: 385}}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    colors={['#0078FF']}
+                    tintColor="#0078FF"
+                  />
+                }
               />
             </>
           )}

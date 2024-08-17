@@ -4,7 +4,6 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Dimensions,
   Animated,
   SafeAreaView,
   Alert,
