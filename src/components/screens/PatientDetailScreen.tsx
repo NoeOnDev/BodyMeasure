@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   Text,
@@ -8,18 +8,21 @@ import {
   Animated,
   SafeAreaView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
+import {getPatientHistoryById} from '../../services/PatientService';
 
 interface Diagnosis {
-  historial_id: number;
+  history_id: number;
   diagnosisDate: string;
   diagnosisTime: string;
 }
 
 interface PatientDetails {
+  patient_id: number;
   name: string;
   phone: string;
   email: string;
@@ -34,8 +37,20 @@ export type RootStackParamList = {
 
 const screenWidth = Dimensions.get('window').width;
 
+const formatDate = (dateString: string): string => {
+  if (!dateString) return 'Fecha inválida';
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return 'Fecha inválida'; // Verifica si es una fecha válida
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export const PatientDetailScreen = (): React.JSX.Element => {
   const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
   const {patientDetails} = route.params;
@@ -50,6 +65,30 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     {top: 0, left: 0},
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const fetchPatientHistory = async () => {
+      try {
+        const data = await getPatientHistoryById(patientDetails.patient_id);
+        const formattedData = data.map((diagnosis: any) => ({
+          history_id: diagnosis.history_id,
+          diagnosisDate: diagnosis.date,
+          diagnosisTime: diagnosis.time,
+        }));
+        setDiagnoses(formattedData);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('Error al obtener el historial del paciente');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatientHistory();
+  }, [patientDetails.patient_id]);
 
   const toggleMenu = (id: number, top: number, left: number) => {
     if (selectedDiagnosisId === id) {
@@ -98,7 +137,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
           onPress: () => {
             setDiagnoses(prevDiagnoses =>
               prevDiagnoses.filter(
-                diagnosis => diagnosis.historial_id !== historialId,
+                diagnosis => diagnosis.history_id !== historialId,
               ),
             );
             setSelectedDiagnosisId(null);
@@ -148,35 +187,53 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     <Animated.View
       style={[
         styles.row,
-        selectedDiagnosisId === item.historial_id && styles.selectedRow,
-        pressedDiagnosisId === item.historial_id && {
+        selectedDiagnosisId === item.history_id && styles.selectedRow,
+        pressedDiagnosisId === item.history_id && {
           transform: [{scale: pressAnimValue}],
         },
       ]}>
       <TouchableOpacity
         activeOpacity={0.7}
         style={styles.rowContent}
-        onPressIn={() => handleRowPressIn(item.historial_id)}
+        onPressIn={() => handleRowPressIn(item.history_id)}
         onPressOut={handleRowPressOut}
-        onPress={() => handleRowPress(item.historial_id)}>
+        onPress={() => handleRowPress(item.history_id)}>
         <View style={styles.diagnosisDateCell}>
-          <Text style={styles.cellText}>{item.diagnosisDate}</Text>
+          <Text style={styles.cellText}>{formatDate(item.diagnosisDate)}</Text>
         </View>
         <View style={styles.diagnosisTimeCell}>
-          <Text style={styles.cellText}>{item.diagnosisTime}</Text>
+          <Text style={styles.cellText}>
+            {item.diagnosisTime || 'Hora inválida'}
+          </Text>
         </View>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.iconCell}
           onPress={event => {
             const {pageY, pageX} = event.nativeEvent;
-            toggleMenu(item.historial_id, pageY, pageX);
+            toggleMenu(item.history_id, pageY, pageX);
           }}>
           <Icon name="more-vert" size={24} color="#666" />
         </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>
   );
+
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <ActivityIndicator size="large" color="#0078FF" />
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={styles.safeArea}>
+        <Text style={styles.errorText}>{error}</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -202,7 +259,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
               <FlatList
                 data={diagnoses}
                 renderItem={renderDiagnosis}
-                keyExtractor={item => item.historial_id.toString()}
+                keyExtractor={item => item.history_id.toString()}
                 contentContainerStyle={{paddingBottom: 50}}
                 style={{maxHeight: 395}}
               />

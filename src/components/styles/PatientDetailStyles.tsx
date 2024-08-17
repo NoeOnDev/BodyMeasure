@@ -56,6 +56,12 @@ export const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Montserrat-Bold',
   },
+  errorText: {
+    fontSize: 16,
+    color: '#ff3d00',
+    textAlign: 'center',
+    fontFamily: 'Montserrat-Regular',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
