@@ -12,7 +12,6 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
 import {getPatientData, getPatientHistory} from '../../services/PatientService';
 
@@ -31,8 +30,6 @@ interface PatientDetails {
   height: number;
 }
 
-const screenWidth = Dimensions.get('window').width;
-
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
   const year = date.getFullYear();
@@ -48,14 +45,8 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   );
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
-    null,
-  );
   const [pressedDiagnosisId, setPressedDiagnosisId] = useState<number | null>(
     null,
-  );
-  const [menuPosition, setMenuPosition] = useState<{top: number; left: number}>(
-    {top: 0, left: 0},
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
   const navigation = useNavigation();
@@ -109,15 +100,6 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     );
   }
 
-  const toggleMenu = (id: number, top: number, left: number) => {
-    if (selectedDiagnosisId === id) {
-      setSelectedDiagnosisId(null);
-    } else {
-      setSelectedDiagnosisId(id);
-      setMenuPosition({top: top - 60, left});
-    }
-  };
-
   const handleRowPressIn = (id: number) => {
     setPressedDiagnosisId(id);
     Animated.timing(pressAnimValue, {
@@ -137,34 +119,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   };
 
   const handleRowPress = (id: number) => {
-    if (selectedDiagnosisId !== id) {
-      setSelectedDiagnosisId(null);
-    }
-  };
-
-  const handleDeleteDiagnosis = (historyId: number) => {
-    Alert.alert(
-      'Eliminar Diagnóstico',
-      '¿Estás seguro de que deseas eliminar este diagnóstico?',
-      [
-        {
-          text: 'No',
-          style: 'cancel',
-        },
-        {
-          text: 'Sí',
-          onPress: () => {
-            setDiagnoses(prevDiagnoses =>
-              prevDiagnoses.filter(
-                diagnosis => diagnosis.history_id !== historyId,
-              ),
-            );
-            setSelectedDiagnosisId(null);
-          },
-        },
-      ],
-      {cancelable: true},
-    );
+    setPressedDiagnosisId(null);
   };
 
   const PatientInfo = () => {
@@ -208,7 +163,6 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     <Animated.View
       style={[
         styles.row,
-        selectedDiagnosisId === item.history_id && styles.selectedRow,
         pressedDiagnosisId === item.history_id && {
           transform: [{scale: pressAnimValue}],
         },
@@ -225,15 +179,6 @@ export const PatientInfoScreen = (): React.JSX.Element => {
         <View style={styles.diagnosisTimeCell}>
           <Text style={styles.cellText}>{item.time}</Text>
         </View>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          style={styles.iconCell}
-          onPress={event => {
-            const {pageY, pageX} = event.nativeEvent;
-            toggleMenu(item.history_id, pageY, pageX);
-          }}>
-          <Icon name="more-vert" size={24} color="#666" />
-        </TouchableOpacity>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -264,7 +209,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
                 renderItem={renderDiagnosis}
                 keyExtractor={item => item.history_id.toString()}
                 contentContainerStyle={{paddingBottom: 50}}
-                style={{maxHeight: 395}}
+                style={{maxHeight: 385}}
                 refreshControl={
                   <RefreshControl
                     refreshing={refreshing}
@@ -275,23 +220,6 @@ export const PatientInfoScreen = (): React.JSX.Element => {
                 }
               />
             </>
-          )}
-          {selectedDiagnosisId !== null && (
-            <View
-              style={[
-                styles.menu,
-                {
-                  top: menuPosition.top,
-                  left: Math.min(menuPosition.left, screenWidth - 150),
-                },
-              ]}>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.menuItem}
-                onPress={() => handleDeleteDiagnosis(selectedDiagnosisId)}>
-                <Text style={styles.menuItemText}>Eliminar</Text>
-              </TouchableOpacity>
-            </View>
           )}
         </View>
       </View>

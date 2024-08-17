@@ -76,14 +76,14 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   nameCell: {
-    flex: 6,
+    flex: 7,
     padding: 16,
   },
   iconCell: {
     padding: 16,
   },
   cellText: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
   },
   menu: {
@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   menuItemText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#333',
     fontFamily: 'Montserrat-Regular',
   },

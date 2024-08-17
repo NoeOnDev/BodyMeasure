@@ -30,29 +30,30 @@ export const styles = StyleSheet.create({
   tableHeader: {
     flexDirection: 'row',
     marginBottom: 10,
+    justifyContent: 'space-between',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+    paddingEnd: 10,
+    paddingStart: 10,
   },
   headerDateCell: {
-    flex: 4,
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderTopLeftRadius: 8,
   },
   headerTimeCell: {
-    flex: 6,
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderTopRightRadius: 8,
   },
   diagnosisDateCell: {
-    flex: 4,
     padding: 16,
   },
   diagnosisTimeCell: {
-    flex: 4.3,
     padding: 16,
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#333',
     fontFamily: 'Montserrat-Bold',
   },
@@ -78,13 +79,21 @@ export const styles = StyleSheet.create({
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  rowContentDetail: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
   },
   selectedRow: {
     backgroundColor: '#e0e0e0',
   },
   iconCell: {
-    padding: 16,
+    marginLeft: -20,
+    padding: 8,
   },
   cellText: {
     fontSize: 17,
@@ -105,7 +114,7 @@ export const styles = StyleSheet.create({
     padding: 12,
   },
   menuItemText: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#333',
     fontFamily: 'Montserrat-Regular',
   },
@@ -121,7 +130,7 @@ export const styles = StyleSheet.create({
     padding: 6,
   },
   infoColumnOne: {
-    flex: 7,
+    flex: 6,
   },
   infoColumnTwo: {
     flex: 2,

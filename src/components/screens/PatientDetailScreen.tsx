@@ -40,7 +40,7 @@ const screenWidth = Dimensions.get('window').width;
 const formatDate = (dateString: string): string => {
   if (!dateString) return 'Fecha inválida';
   const date = new Date(dateString);
-  if (isNaN(date.getTime())) return 'Fecha inválida'; // Verifica si es una fecha válida
+  if (isNaN(date.getTime())) return 'Fecha inválida';
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
@@ -194,7 +194,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
       ]}>
       <TouchableOpacity
         activeOpacity={0.7}
-        style={styles.rowContent}
+        style={styles.rowContentDetail}
         onPressIn={() => handleRowPressIn(item.history_id)}
         onPressOut={handleRowPressOut}
         onPress={() => handleRowPress(item.history_id)}>
@@ -261,7 +261,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
                 renderItem={renderDiagnosis}
                 keyExtractor={item => item.history_id.toString()}
                 contentContainerStyle={{paddingBottom: 50}}
-                style={{maxHeight: 395}}
+                style={{maxHeight: 385}}
               />
             </>
           )}
