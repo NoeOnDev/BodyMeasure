@@ -27,7 +27,6 @@ const handleLoginError = (error: any) => {
 
 export const loginDoctor = async (username: string, password: string) => {
   try {
-    console.log('Enviando datos a la API:', {username, password});
     const response = await axios.post(`${API_URL}/doctors/login`, {
       username,
       password,
@@ -44,7 +43,6 @@ export const loginDoctor = async (username: string, password: string) => {
 
 export const loginPatient = async (username: string, password: string) => {
   try {
-    console.log('Enviando datos a la API:', {username, password});
     const response = await axios.post(`${API_URL}/patient/login`, {
       username,
       password,

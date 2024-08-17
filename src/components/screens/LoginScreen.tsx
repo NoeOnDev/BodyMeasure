@@ -98,8 +98,6 @@ export const LoginScreen = ({
         return;
       }
 
-      console.log('Intentando iniciar sesión con:', {username, password});
-
       if (userType === 'Doctor') {
         const data = await loginDoctor(username, password);
         Alert.alert('Éxito', 'Inicio de sesión como Doctor exitoso');
