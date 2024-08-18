@@ -11,7 +11,26 @@ export type HistoryPatientScreenRouteProp = RouteProp<
 
 export const HistoryPatientScreen = (): React.JSX.Element => {
   const route = useRoute<HistoryPatientScreenRouteProp>();
-  const {patientName, doctorName, date, time, age, sex, height} = route.params;
+  console.log(route.params); // Agregar log para depuración
+  const {
+    patientName,
+    doctorName,
+    date,
+    time,
+    age,
+    sex,
+    height,
+    mlgt,
+    act,
+    icw,
+    ecw,
+    mine,
+    mg,
+    pmg,
+    imc,
+    mm,
+    pro,
+  } = route.params;
 
   const formatDateAndTime = (date: string, time: string): string => {
     return `${formatDate(date)} ${time}`;
@@ -61,51 +80,51 @@ export const HistoryPatientScreen = (): React.JSX.Element => {
               <Text style={styles.analysisLabel}>
                 Masa Libre de Grasa Total (MLGT)
               </Text>
-              <Text style={styles.analysisValue}>55.2 kg</Text>
+              <Text style={styles.analysisValue}>{mlgt} kg</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>
                 Agua Total del Cuerpo (ACT)
               </Text>
-              <Text style={styles.analysisValue}>42.8 L</Text>
+              <Text style={styles.analysisValue}>{act} L</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>Agua Intracelular (ICW)</Text>
-              <Text style={styles.analysisValue}>28.3 L</Text>
+              <Text style={styles.analysisValue}>{icw} L</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>Agua Extracelular (ECW)</Text>
-              <Text style={styles.analysisValue}>14.5 L</Text>
+              <Text style={styles.analysisValue}>{ecw} L</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>
                 Porcentaje de Minerales (MINE)
               </Text>
-              <Text style={styles.analysisValue}>4.7%</Text>
+              <Text style={styles.analysisValue}>{mine}%</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>Masa Grasa (MG)</Text>
-              <Text style={styles.analysisValue}>18.5 kg</Text>
+              <Text style={styles.analysisValue}>{mg} kg</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>
                 Porcentaje de Masa Grasa (PMG)
               </Text>
-              <Text style={styles.analysisValue}>24.3%</Text>
+              <Text style={styles.analysisValue}>{pmg}%</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>
                 Índice de Masa Corporal (IMC)
               </Text>
-              <Text style={styles.analysisValue}>22.8 kg/m²</Text>
+              <Text style={styles.analysisValue}>{imc} kg/m²</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>Masa Muscular (MM)</Text>
-              <Text style={styles.analysisValue}>32.5 kg</Text>
+              <Text style={styles.analysisValue}>{mm} kg</Text>
             </View>
             <View style={styles.analysisBox}>
               <Text style={styles.analysisLabel}>Proteínas (PRO)</Text>
-              <Text style={styles.analysisValue}>10.1 kg</Text>
+              <Text style={styles.analysisValue}>{pro} kg</Text>
             </View>
           </View>
         </ScrollView>

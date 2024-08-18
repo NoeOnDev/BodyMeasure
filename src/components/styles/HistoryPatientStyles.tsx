@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     marginBottom: 4,
   },
   analysisValue: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
     fontFamily: 'Montserrat-Bold',

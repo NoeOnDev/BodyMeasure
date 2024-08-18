@@ -22,6 +22,16 @@ interface Diagnosis {
   diagnosisDate: string;
   diagnosisTime: string;
   doctorName: string;
+  mlgt: number;
+  act: number;
+  icw: number;
+  ecw: number;
+  mine: number;
+  mg: number;
+  pmg: number;
+  imc: number;
+  mm: number;
+  pro: number;
 }
 
 interface PatientDetails {
@@ -44,6 +54,16 @@ export type RootStackParamList = {
     age: number;
     sex: string;
     height: number;
+    mlgt: number;
+    act: number;
+    icw: number;
+    ecw: number;
+    mine: number;
+    mg: number;
+    pmg: number;
+    imc: number;
+    mm: number;
+    pro: number;
   };
 };
 
@@ -89,6 +109,16 @@ export const PatientDetailScreen = (): React.JSX.Element => {
         diagnosisDate: diagnosis.date,
         diagnosisTime: diagnosis.time,
         doctorName: diagnosis.doctor_name,
+        mlgt: diagnosis.mlgt,
+        act: diagnosis.act,
+        icw: diagnosis.icw,
+        ecw: diagnosis.ecw,
+        mine: diagnosis.mine,
+        mg: diagnosis.mg,
+        pmg: diagnosis.pmg,
+        imc: diagnosis.imc,
+        mm: diagnosis.mm,
+        pro: diagnosis.pro,
       }));
       setDiagnoses(formattedData);
     } catch (error) {
@@ -152,6 +182,16 @@ export const PatientDetailScreen = (): React.JSX.Element => {
         age: patientDetails.age,
         sex: patientDetails.sex,
         height: patientDetails.height,
+        mlgt: selectedHistory.mlgt,
+        act: selectedHistory.act,
+        icw: selectedHistory.icw,
+        ecw: selectedHistory.ecw,
+        mine: selectedHistory.mine,
+        mg: selectedHistory.mg,
+        pmg: selectedHistory.pmg,
+        imc: selectedHistory.imc,
+        mm: selectedHistory.mm,
+        pro: selectedHistory.pro,
       });
     }
   };
