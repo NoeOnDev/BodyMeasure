@@ -88,7 +88,7 @@ const App = (): React.JSX.Element => {
           name="PatientTabs"
           component={PatientTabs}
           options={{
-            title: 'Información del paciente',
+            title: 'BodyMeasure',
             headerBackButtonMenuEnabled: false,
             headerBackVisible: false,
             headerLeft: () => null,
