@@ -14,7 +14,10 @@ import {
 import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {styles} from '../styles/PatientDetailStyles';
-import {getPatientHistoryById} from '../../services/PatientService';
+import {
+  getPatientHistoryById,
+  deletePatientHistory,
+} from '../../services/PatientService';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 interface Diagnosis {
@@ -215,13 +218,22 @@ export const PatientDetailScreen = (): React.JSX.Element => {
         },
         {
           text: 'Sí',
-          onPress: () => {
-            setDiagnoses(prevDiagnoses =>
-              prevDiagnoses.filter(
-                diagnosis => diagnosis.history_id !== historialId,
-              ),
-            );
-            setSelectedDiagnosisId(null);
+          onPress: async () => {
+            try {
+              await deletePatientHistory(historialId);
+              setDiagnoses(prevDiagnoses =>
+                prevDiagnoses.filter(
+                  diagnosis => diagnosis.history_id !== historialId,
+                ),
+              );
+              setSelectedDiagnosisId(null);
+            } catch (error) {
+              if (error instanceof Error) {
+                setError(error.message);
+              } else {
+                setError('Error al eliminar el historial del paciente');
+              }
+            }
           },
         },
       ],

@@ -170,6 +170,35 @@ export const getPatientHistoryById = async (patientId: number) => {
   }
 };
 
+export const deletePatientHistory = async (historyId: number) => {
+  try {
+    const token = await AsyncStorage.getItem('authToken');
+
+    if (!token) {
+      throw 'No se encontró el token de autenticación';
+    }
+
+    const response = await axios.delete(
+      `${API_URL}/patient/history/${historyId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw (
+        error.response?.data || 'Error al eliminar el historial del paciente'
+      );
+    } else {
+      throw 'Error al eliminar el historial del paciente';
+    }
+  }
+};
+
 export const getPatientIotData = async () => {
   try {
     const token = await AsyncStorage.getItem('authToken');

@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   boxShadow: {
-    elevation: 3,
     borderRadius: 8,
     padding: 16,
     backgroundColor: '#fff',
@@ -87,7 +86,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     fontFamily: 'Montserrat-Regular',
-    marginBottom: 4,
+    marginBottom: 5,
   },
   analysisValue: {
     fontSize: 16,
@@ -96,6 +95,6 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Bold',
   },
   analysisScrollView: {
-    maxHeight: 440,
+    maxHeight: 450,
   },
 });
