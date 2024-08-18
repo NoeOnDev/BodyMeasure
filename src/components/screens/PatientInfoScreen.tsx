@@ -11,6 +11,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {styles} from '../styles/PatientDetailStyles';
 import {getPatientData, getPatientHistory} from '../../services/PatientService';
 
@@ -18,6 +19,17 @@ interface Diagnosis {
   history_id: number;
   date: string;
   time: string;
+  doctorName: string;
+  mlgt: number;
+  act: number;
+  icw: number;
+  ecw: number;
+  mine: number;
+  mg: number;
+  pmg: number;
+  imc: number;
+  mm: number;
+  pro: number;
 }
 
 interface PatientDetails {
@@ -28,6 +40,29 @@ interface PatientDetails {
   sex: string;
   height: number;
 }
+
+export type RootStackParamList = {
+  PatientDetail: {patientDetails: PatientDetails};
+  History: {
+    patientName: string;
+    doctorName: string;
+    date: string;
+    time: string;
+    age: number;
+    sex: string;
+    height: number;
+    mlgt: number;
+    act: number;
+    icw: number;
+    ecw: number;
+    mine: number;
+    mg: number;
+    pmg: number;
+    imc: number;
+    mm: number;
+    pro: number;
+  };
+};
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString);
@@ -48,7 +83,8 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     null,
   );
   const pressAnimValue = useRef(new Animated.Value(1)).current;
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const fetchPatientHistory = async () => {
     try {
@@ -58,6 +94,17 @@ export const PatientInfoScreen = (): React.JSX.Element => {
           history_id: item.history_id,
           date: item.date,
           time: item.time,
+          doctorName: item.doctor_name,
+          mlgt: item.mlgt,
+          act: item.act,
+          icw: item.icw,
+          ecw: item.ecw,
+          mine: item.mine,
+          mg: item.mg,
+          pmg: item.pmg,
+          imc: item.imc,
+          mm: item.mm,
+          pro: item.pro,
         })),
       );
     } catch (error) {
@@ -118,7 +165,30 @@ export const PatientInfoScreen = (): React.JSX.Element => {
   };
 
   const handleRowPress = (id: number) => {
-    setPressedDiagnosisId(null);
+    const selectedHistory = diagnoses.find(
+      diagnosis => diagnosis.history_id === id,
+    );
+    if (selectedHistory && patientDetails) {
+      navigation.navigate('History', {
+        patientName: patientDetails.name,
+        doctorName: selectedHistory.doctorName,
+        date: selectedHistory.date,
+        time: selectedHistory.time,
+        age: patientDetails.age,
+        sex: patientDetails.sex,
+        height: patientDetails.height,
+        mlgt: selectedHistory.mlgt,
+        act: selectedHistory.act,
+        icw: selectedHistory.icw,
+        ecw: selectedHistory.ecw,
+        mine: selectedHistory.mine,
+        mg: selectedHistory.mg,
+        pmg: selectedHistory.pmg,
+        imc: selectedHistory.imc,
+        mm: selectedHistory.mm,
+        pro: selectedHistory.pro,
+      });
+    }
   };
 
   const PatientInfo = () => {

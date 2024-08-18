@@ -11,7 +11,7 @@ export type HistoryPatientScreenRouteProp = RouteProp<
 
 export const HistoryPatientScreen = (): React.JSX.Element => {
   const route = useRoute<HistoryPatientScreenRouteProp>();
-  console.log(route.params); // Agregar log para depuración
+  console.log(route.params);
   const {
     patientName,
     doctorName,

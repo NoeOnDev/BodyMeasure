@@ -80,7 +80,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '88%',
+    width: '86%',
   },
   rowContentDetail: {
     flexDirection: 'row',
