@@ -28,6 +28,7 @@ type RootStackParamList = {
 };
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 export const PatientScreen = (): React.JSX.Element => {
   const [patients, setPatients] = useState<Patient[]>([]);
@@ -39,9 +40,11 @@ export const PatientScreen = (): React.JSX.Element => {
     null,
   );
   const [pressedPatientId, setPressedPatientId] = useState<number | null>(null);
-  const [menuPosition, setMenuPosition] = useState<{top: number; left: number}>(
-    {top: 0, left: 0},
-  );
+  const [menuPosition, setMenuPosition] = useState<{
+    top: number;
+    left: number;
+    menuDirection: 'up' | 'down';
+  }>({top: 0, left: 0, menuDirection: 'down'});
   const scaleValue = useRef(new Animated.Value(1)).current;
   const pressAnimValue = useRef(new Animated.Value(1)).current;
 
@@ -80,11 +83,16 @@ export const PatientScreen = (): React.JSX.Element => {
   };
 
   const toggleMenu = (id: number, top: number, left: number) => {
+    const isNearBottom = top > screenHeight * 0.75;
+
+    const menuDirection = isNearBottom ? 'up' : 'down';
+    const adjustedTop = isNearBottom ? top - 150 : top - 55;
+
     if (selectedPatientId === id) {
       setSelectedPatientId(null);
     } else {
       setSelectedPatientId(id);
-      setMenuPosition({top: top - 35, left});
+      setMenuPosition({top: adjustedTop, left, menuDirection});
     }
   };
 
@@ -242,7 +250,7 @@ export const PatientScreen = (): React.JSX.Element => {
                 styles.menu,
                 {
                   top: menuPosition.top,
-                  left: Math.min(menuPosition.left, screenWidth - 120),
+                  left: Math.min(menuPosition.left, screenWidth - 150),
                 },
               ]}>
               <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
@@ -267,13 +275,12 @@ export const PatientScreen = (): React.JSX.Element => {
       <Animated.View
         style={[styles.addButtonContainer, {transform: [{scale: scaleValue}]}]}>
         <TouchableOpacity
-          activeOpacity={0.9}
-          style={styles.addButton}
+          activeOpacity={0.7}
           onPressIn={handlePressIn}
           onPressOut={handlePressOut}
-          onPress={() => navigation.navigate('Register')}>
-          <Icon name="add" size={24} color="#fff" />
-          <Text style={styles.addButtonText}>Agregar</Text>
+          onPress={() => navigation.navigate('Register')}
+          style={styles.addButton}>
+          <Icon name="person-add" size={26} color="#FFFFFF" />
         </TouchableOpacity>
       </Animated.View>
     </SafeAreaView>

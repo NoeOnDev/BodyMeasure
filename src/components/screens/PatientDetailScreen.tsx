@@ -68,6 +68,7 @@ export type RootStackParamList = {
 };
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 export const formatDate = (dateString: string): string => {
   if (!dateString) return 'Fecha inválida';
@@ -94,9 +95,11 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   const [pressedDiagnosisId, setPressedDiagnosisId] = useState<number | null>(
     null,
   );
-  const [menuPosition, setMenuPosition] = useState<{top: number; left: number}>(
-    {top: 0, left: 0},
-  );
+  const [menuPosition, setMenuPosition] = useState<{
+    top: number;
+    left: number;
+    menuDirection: 'up' | 'down';
+  }>({top: 0, left: 0, menuDirection: 'down'});
   const pressAnimValue = useRef(new Animated.Value(1)).current;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -143,11 +146,16 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   };
 
   const toggleMenu = (id: number, top: number, left: number) => {
+    const isNearBottom = top > screenHeight * 0.75;
+
+    const menuDirection = isNearBottom ? 'up' : 'down';
+    const adjustedTop = isNearBottom ? top - 120 : top - 60;
+
     if (selectedDiagnosisId === id) {
       setSelectedDiagnosisId(null);
     } else {
       setSelectedDiagnosisId(id);
-      setMenuPosition({top: top - 60, left});
+      setMenuPosition({top: adjustedTop, left, menuDirection});
     }
   };
 
@@ -354,7 +362,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
                 styles.menu,
                 {
                   top: menuPosition.top,
-                  left: Math.min(menuPosition.left, screenWidth - 150),
+                  left: Math.min(menuPosition.left, screenWidth - 170),
                 },
               ]}>
               <TouchableOpacity
