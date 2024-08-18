@@ -169,3 +169,36 @@ export const getPatientHistoryById = async (patientId: number) => {
     }
   }
 };
+
+export const getPatientIotData = async () => {
+  try {
+    const token = await AsyncStorage.getItem('authToken');
+
+    if (!token) {
+      throw new Error('No se encontró el token de autenticación');
+    }
+
+    const response = await axios.get(`${API_URL}/patient/iot`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      return {
+        message: 'Diagnóstico completo con éxito',
+        note: 'Puede ver el diagnóstico realizado en su historial de diagnósticos',
+      };
+    } else {
+      throw new Error('Diagnóstico fallido');
+    }
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.message || 'Diagnóstico fallido';
+      throw new Error(errorMessage);
+    } else {
+      throw new Error('Diagnóstico fallido');
+    }
+  }
+};

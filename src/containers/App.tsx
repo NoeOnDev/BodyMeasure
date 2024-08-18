@@ -1,6 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {LoginSwitcher} from '../components/screens/LoginPatientAndDoctor';
 import {PatientScreen} from '../components/screens/PatientScreen';
 import {RegisterScreen} from '../components/screens/RegisterScreen';
@@ -10,6 +12,38 @@ import {HistoryPatientScreen} from '../components/screens/HistoryPatientScreen';
 import {DiagnosticScreen} from '../components/screens/DiagnosticScreen';
 
 const Stack = createNativeStackNavigator();
+const Tab = createMaterialBottomTabNavigator();
+
+const PatientTabs = () => {
+  return (
+    <Tab.Navigator
+      initialRouteName="PatientInfo"
+      activeColor="#0078FF"
+      inactiveColor="#8e8e93"
+      barStyle={{backgroundColor: '#fff'}}>
+      <Tab.Screen
+        name="PatientInfo"
+        component={PatientInfoScreen}
+        options={{
+          tabBarLabel: 'Info',
+          tabBarIcon: ({color}) => (
+            <Icon name="account" color={color} size={24} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Diagnostic"
+        component={DiagnosticScreen}
+        options={{
+          tabBarLabel: 'Diagnóstico',
+          tabBarIcon: ({color}) => (
+            <Icon name="stethoscope" color={color} size={24} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 const App = (): React.JSX.Element => {
   return (
@@ -51,8 +85,8 @@ const App = (): React.JSX.Element => {
           options={{title: 'Información del paciente'}}
         />
         <Stack.Screen
-          name="PatientInfo"
-          component={PatientInfoScreen}
+          name="PatientTabs"
+          component={PatientTabs}
           options={{
             title: 'Información del paciente',
             headerBackButtonMenuEnabled: false,
@@ -65,16 +99,6 @@ const App = (): React.JSX.Element => {
           component={HistoryPatientScreen}
           options={{
             title: 'Historial del diagnóstico',
-          }}
-        />
-        <Stack.Screen
-          name="Diagnostic"
-          component={DiagnosticScreen}
-          options={{
-            title: 'Diagnóstico',
-            headerBackButtonMenuEnabled: false,
-            headerBackVisible: false,
-            headerLeft: () => null,
           }}
         />
       </Stack.Navigator>

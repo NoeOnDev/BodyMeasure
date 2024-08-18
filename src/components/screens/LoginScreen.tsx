@@ -30,7 +30,7 @@ interface LoginScreenProps {
 
 type RootStackParamList = {
   Patients: undefined;
-  PatientInfo: undefined;
+  PatientTabs: undefined;
 };
 
 export const LoginScreen = ({
@@ -105,7 +105,7 @@ export const LoginScreen = ({
       } else {
         const data = await loginPatient(username, password);
         Alert.alert('Éxito', 'Inicio de sesión como Paciente exitoso');
-        navigation.navigate('PatientInfo');
+        navigation.navigate('PatientTabs');
       }
     } catch (error) {
       if (typeof error === 'string') {

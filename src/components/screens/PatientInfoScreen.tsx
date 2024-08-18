@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {styles} from '../styles/PatientDetailStyles';
 import {getPatientData, getPatientHistory} from '../../services/PatientService';
@@ -130,6 +130,12 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     fetchPatientData();
     fetchPatientHistory();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPatientHistory();
+    }, []),
+  );
 
   const onRefresh = () => {
     setRefreshing(true);
