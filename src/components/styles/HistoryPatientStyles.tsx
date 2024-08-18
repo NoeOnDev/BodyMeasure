@@ -70,4 +70,35 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Montserrat-Regular',
   },
+  analysisContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    height: '100%',
+  },
+  analysisBox: {
+    width: '40%',
+    borderWidth: 2,
+    borderColor: '#007BFF',
+    borderRadius: 8,
+    padding: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginBottom: 16,
+  },
+  analysisLabel: {
+    fontSize: 14,
+    color: '#666',
+    fontFamily: 'Montserrat-Regular',
+    marginBottom: 4,
+  },
+  analysisValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    fontFamily: 'Montserrat-Bold',
+  },
+  analysisScrollView: {
+    maxHeight: 440,
+  },
 });
