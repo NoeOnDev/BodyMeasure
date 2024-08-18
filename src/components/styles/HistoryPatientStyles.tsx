@@ -11,10 +11,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   boxShadow: {
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: {width: 0, height: 2},
-    elevation: 4,
+    elevation: 2,
     borderRadius: 8,
     padding: 16,
     backgroundColor: '#fff',

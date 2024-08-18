@@ -187,7 +187,7 @@ export const getPatientIotData = async () => {
     if (response.status === 200) {
       return {
         message: 'Diagnóstico completo con éxito',
-        note: 'Puede ver el diagnóstico realizado en su historial de diagnósticos',
+        note: 'Puede ver los resultados del diagnostico en el historial de diagnósticos',
       };
     } else {
       throw new Error('Diagnóstico fallido');

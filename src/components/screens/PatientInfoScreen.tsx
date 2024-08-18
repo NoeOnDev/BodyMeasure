@@ -284,7 +284,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
                 renderItem={renderDiagnosis}
                 keyExtractor={item => item.history_id.toString()}
                 contentContainerStyle={{paddingBottom: 50}}
-                style={{maxHeight: 385}}
+                style={{maxHeight: 330}}
                 refreshControl={
                   <RefreshControl
                     refreshing={refreshing}

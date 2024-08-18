@@ -53,7 +53,6 @@ export const DiagnosticScreen = (): React.JSX.Element => {
               const response = await getPatientIotData();
               setLoading(false);
               Alert.alert('Diagnóstico completo', response.note);
-              // Emitir evento de navegación
               navigation.navigate('PatientInfo', {refresh: true});
             } catch (error) {
               setLoading(false);
