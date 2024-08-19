@@ -81,6 +81,7 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     marginBottom: 16,
+    justifyContent: 'space-between',
   },
   analysisLabel: {
     fontSize: 14,
