@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  NavigationContainer,
+  StackActions,
+} from '@react-navigation/native';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -72,6 +78,15 @@ const PatientTabs = () => {
   );
 };
 
+type RootStackParamList = {
+  Login: undefined;
+  Patients: undefined;
+  Register: undefined;
+  PatientDetail: undefined;
+  PatientTabs: undefined;
+  History: undefined;
+};
+
 const App = (): React.JSX.Element => {
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
 
@@ -122,7 +137,9 @@ const App = (): React.JSX.Element => {
     return () => backHandler.remove();
   }, [initialRoute]);
 
-  const handleLogout = async navigation => {
+  const handleLogout = async (
+    navigation: NativeStackNavigationProp<RootStackParamList>,
+  ) => {
     await AsyncStorage.removeItem('authToken');
     await AsyncStorage.removeItem('userType');
     setInitialRoute('Login');

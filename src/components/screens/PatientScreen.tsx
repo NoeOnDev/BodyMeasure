@@ -7,6 +7,7 @@ import {
   Dimensions,
   Animated,
   SafeAreaView,
+  StatusBar,
   ActivityIndicator,
   RefreshControl,
   Alert,
@@ -216,6 +217,7 @@ export const PatientScreen = (): React.JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
       {patients.length === 0 ? (
         <Text style={styles.noPatientsText}>
           Ups, aún no has agregado pacientes.
