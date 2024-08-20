@@ -86,7 +86,7 @@ export const PatientScreen = (): React.JSX.Element => {
     const isNearBottom = top > screenHeight * 0.75;
 
     const menuDirection = isNearBottom ? 'up' : 'down';
-    const adjustedTop = isNearBottom ? top - 150 : top - 55;
+    const adjustedTop = isNearBottom ? top - 100 : top - 55;
 
     if (selectedPatientId === id) {
       setSelectedPatientId(null);
@@ -253,9 +253,9 @@ export const PatientScreen = (): React.JSX.Element => {
                   left: Math.min(menuPosition.left, screenWidth - 150),
                 },
               ]}>
-              <TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
+              {/*<TouchableOpacity activeOpacity={0.7} style={styles.menuItem}>
                 <Text style={styles.menuItemText}>Editar</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.menuItem}
