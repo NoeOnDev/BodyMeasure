@@ -34,6 +34,7 @@ export const loginDoctor = async (username: string, password: string) => {
 
     const token = response.data.token;
     await AsyncStorage.setItem('authToken', token);
+    await AsyncStorage.setItem('userType', 'Doctor');
 
     return response.data;
   } catch (error) {
@@ -50,6 +51,7 @@ export const loginPatient = async (username: string, password: string) => {
 
     const token = response.data.token;
     await AsyncStorage.setItem('authToken', token);
+    await AsyncStorage.setItem('userType', 'Patient');
 
     return response.data;
   } catch (error) {

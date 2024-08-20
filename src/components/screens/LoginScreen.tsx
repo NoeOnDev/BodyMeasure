@@ -18,6 +18,7 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {styles} from '../styles/LoginStyles';
 import {loginDoctor, loginPatient} from '../../services/AuthService';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface LoginScreenProps {
   loginSubtitle: string;
@@ -97,14 +98,18 @@ export const LoginScreen = ({
         Alert.alert('Error', 'Por favor, ingresa tu usuario y contraseña.');
         return;
       }
-
+  
       if (userType === 'Doctor') {
         const data = await loginDoctor(username, password);
         Alert.alert('Éxito', 'Inicio de sesión como Doctor exitoso');
+        await AsyncStorage.setItem('authToken', data.token);
+        await AsyncStorage.setItem('userType', 'Doctor');
         navigation.navigate('Patients');
       } else {
         const data = await loginPatient(username, password);
         Alert.alert('Éxito', 'Inicio de sesión como Paciente exitoso');
+        await AsyncStorage.setItem('authToken', data.token);
+        await AsyncStorage.setItem('userType', 'Patient');
         navigation.navigate('PatientTabs');
       }
     } catch (error) {

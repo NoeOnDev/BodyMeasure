@@ -152,7 +152,7 @@ export const RegisterScreen = (): React.JSX.Element => {
           <Text style={styles.sectionTitle}>Información personal</Text>
           <View style={styles.inputContainer}>
             <Icon
-              name="user-circle"
+              name="user"
               size={20}
               color={getIconColor(personalInfo.name)}
               style={styles.icon}
@@ -306,7 +306,7 @@ export const RegisterScreen = (): React.JSX.Element => {
           <Text style={styles.sectionTitle}>Información de la cuenta</Text>
           <View style={styles.inputContainer}>
             <Icon
-              name="user"
+              name="user-circle"
               size={20}
               color={getIconColor(accountInfo.username)}
               style={styles.icon}
