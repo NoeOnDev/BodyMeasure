@@ -123,7 +123,7 @@ export const LoginScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
+      <StatusBar barStyle="light-content" backgroundColor="#0078FF" />
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

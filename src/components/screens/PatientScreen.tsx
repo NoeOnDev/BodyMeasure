@@ -217,7 +217,7 @@ export const PatientScreen = (): React.JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="light-content" backgroundColor="#0066ff" />
+      <StatusBar barStyle="light-content" backgroundColor="#0078FF" />
       {patients.length === 0 ? (
         <Text style={styles.noPatientsText}>
           Ups, aún no has agregado pacientes.

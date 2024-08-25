@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Animated,
   SafeAreaView,
+  StatusBar,
   Alert,
   ActivityIndicator,
   RefreshControl,
@@ -260,6 +261,7 @@ export const PatientInfoScreen = (): React.JSX.Element => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <StatusBar barStyle="light-content" backgroundColor="#0078FF" />
       <View style={styles.container}>
         <View style={styles.boxShadow}>
           <PatientInfo />
