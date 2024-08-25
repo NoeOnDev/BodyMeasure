@@ -94,6 +94,7 @@ export const styles = StyleSheet.create({
   cellText: {
     fontSize: 17,
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   menu: {
     position: 'absolute',

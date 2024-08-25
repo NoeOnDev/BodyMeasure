@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
     padding: 16,
   },
   cellText: {
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: 'Montserrat-Regular',
     color: '#333',
   },

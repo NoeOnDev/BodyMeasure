@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   menuOptionWrapper: {
-    padding: 10,
+    padding: 12,
   },
   menuOptionText: {
     fontFamily: 'Montserrat-SemiBold',
