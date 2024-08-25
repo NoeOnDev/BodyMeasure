@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -9,13 +9,13 @@ import {
   Animated,
   Alert,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
-import {styles} from '../styles/RegisterStyles';
-import {registerPatient} from '../../services/PatientService';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { styles } from '../styles/RegisterStyles';
+import { registerPatient } from '../../services/PatientService';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
   Patients: undefined;
@@ -65,11 +65,11 @@ export const RegisterScreen = (): React.JSX.Element => {
   };
 
   const clearPersonalInfoField = (field: keyof typeof personalInfo) => {
-    setPersonalInfo({...personalInfo, [field]: ''});
+    setPersonalInfo({ ...personalInfo, [field]: '' });
   };
 
   const clearAccountInfoField = (field: keyof typeof accountInfo) => {
-    setAccountInfo({...accountInfo, [field]: ''});
+    setAccountInfo({ ...accountInfo, [field]: '' });
   };
 
   const clearFields = () => {
@@ -127,7 +127,7 @@ export const RegisterScreen = (): React.JSX.Element => {
       Alert.alert(
         'Registro exitoso',
         `El paciente ${result.name} ha sido registrado correctamente.`,
-        [{text: 'OK', onPress: () => navigation.navigate('Patients')}],
+        [{ text: 'OK', onPress: () => navigation.navigate('Patients') }],
       );
       clearFields();
     } catch (error) {
@@ -160,9 +160,10 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Nombre"
+              placeholderTextColor="#999"
               value={personalInfo.name}
               onChangeText={text =>
-                setPersonalInfo({...personalInfo, name: text})
+                setPersonalInfo({ ...personalInfo, name: text })
               }
             />
             {personalInfo.name.length > 0 && (
@@ -189,9 +190,10 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Correo electrónico"
+              placeholderTextColor="#999"
               value={personalInfo.email}
               onChangeText={text =>
-                setPersonalInfo({...personalInfo, email: text})
+                setPersonalInfo({ ...personalInfo, email: text })
               }
               keyboardType="email-address"
             />
@@ -219,9 +221,10 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Número de teléfono"
+              placeholderTextColor="#999"
               value={personalInfo.phone}
               onChangeText={text =>
-                setPersonalInfo({...personalInfo, phone: text})
+                setPersonalInfo({ ...personalInfo, phone: text })
               }
               keyboardType="phone-pad"
             />
@@ -250,9 +253,10 @@ export const RegisterScreen = (): React.JSX.Element => {
               <TextInput
                 style={[styles.input, styles.smallInput, styles.inputWithUnit]}
                 placeholder="Edad"
+                placeholderTextColor="#999"
                 value={physicalData.age}
                 onChangeText={text =>
-                  setPhysicalData({...physicalData, age: text})
+                  setPhysicalData({ ...physicalData, age: text })
                 }
                 keyboardType="numeric"
               />
@@ -262,9 +266,10 @@ export const RegisterScreen = (): React.JSX.Element => {
               <TextInput
                 style={[styles.input, styles.smallInput, styles.inputWithUnit]}
                 placeholder="Peso"
+                placeholderTextColor="#999"
                 value={physicalData.weight}
                 onChangeText={text =>
-                  setPhysicalData({...physicalData, weight: text})
+                  setPhysicalData({ ...physicalData, weight: text })
                 }
                 keyboardType="numeric"
               />
@@ -278,7 +283,7 @@ export const RegisterScreen = (): React.JSX.Element => {
                 style={styles.picker}
                 selectedValue={physicalData.gender}
                 onValueChange={itemValue =>
-                  setPhysicalData({...physicalData, gender: itemValue})
+                  setPhysicalData({ ...physicalData, gender: itemValue })
                 }>
                 <Picker.Item label="Sexo" value="" />
                 <Picker.Item label="Masculino" value="Masculino" />
@@ -289,9 +294,10 @@ export const RegisterScreen = (): React.JSX.Element => {
               <TextInput
                 style={[styles.input, styles.smallInput, styles.inputWithUnit]}
                 placeholder="Estatura"
+                placeholderTextColor="#999"
                 value={physicalData.height}
                 onChangeText={text =>
-                  setPhysicalData({...physicalData, height: text})
+                  setPhysicalData({ ...physicalData, height: text })
                 }
                 keyboardType="numeric"
               />
@@ -314,9 +320,10 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Nombre de usuario"
+              placeholderTextColor="#999"
               value={accountInfo.username}
               onChangeText={text =>
-                setAccountInfo({...accountInfo, username: text})
+                setAccountInfo({ ...accountInfo, username: text })
               }
             />
             {accountInfo.username.length > 0 && (
@@ -343,10 +350,11 @@ export const RegisterScreen = (): React.JSX.Element => {
             <TextInput
               style={styles.inputWithIcon}
               placeholder="Contraseña"
+              placeholderTextColor="#999"
               secureTextEntry={!passwordVisible}
               value={accountInfo.password}
               onChangeText={text =>
-                setAccountInfo({...accountInfo, password: text})
+                setAccountInfo({ ...accountInfo, password: text })
               }
             />
             {accountInfo.password.length > 0 && (
@@ -367,7 +375,7 @@ export const RegisterScreen = (): React.JSX.Element => {
         <Animated.View
           style={[
             styles.animatedButtonContainer,
-            {transform: [{scale: scaleValue}]},
+            { transform: [{ scale: scaleValue }] },
           ]}>
           <TouchableOpacity
             activeOpacity={0.8}

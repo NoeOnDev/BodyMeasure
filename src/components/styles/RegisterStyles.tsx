@@ -60,8 +60,8 @@ export const styles = StyleSheet.create({
     color: '#333',
   },
   picker: {
+    marginLeft: -16,
     fontSize: 16,
-    marginLeft: -12,
     fontFamily: 'Montserrat-Regular',
     color: '#333',
   },
@@ -69,6 +69,8 @@ export const styles = StyleSheet.create({
     flex: 1,
     height: 50,
     fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   input: {
     height: 50,
@@ -81,10 +83,12 @@ export const styles = StyleSheet.create({
     fontFamily: 'Montserrat-Regular',
     fontSize: 16,
     color: '#333',
+    justifyContent: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    fontFamily: 'Montserrat-Regular',
   },
   smallInput: {
     width: '48%',
