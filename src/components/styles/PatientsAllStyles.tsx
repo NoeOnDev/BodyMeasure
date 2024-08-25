@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   safeArea: {
@@ -60,12 +60,13 @@ export const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 1,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     position: 'relative',
   },
   rowContent: {
     flexDirection: 'row',
     alignItems: 'center',
+    fontFamily: 'Montserrat-Regular',
     flex: 1,
   },
   selectedRow: {
@@ -85,6 +86,7 @@ export const styles = StyleSheet.create({
   cellText: {
     fontSize: 16,
     fontFamily: 'Montserrat-Regular',
+    color: '#333',
   },
   menu: {
     position: 'absolute',
@@ -94,7 +96,7 @@ export const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.2,
     shadowRadius: 4,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     zIndex: 1,
   },
   menuItem: {

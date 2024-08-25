@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, ScrollView} from 'react-native';
-import {useRoute, RouteProp} from '@react-navigation/native';
-import {styles} from '../styles/HistoryPatientStyles';
-import {formatDate, RootStackParamList} from './PatientDetailScreen';
+import { View, Text, ScrollView } from 'react-native';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { styles } from '../styles/HistoryPatientStyles';
+import { formatDate, RootStackParamList } from './PatientDetailScreen';
 
 export type HistoryPatientScreenRouteProp = RouteProp<
   RootStackParamList,

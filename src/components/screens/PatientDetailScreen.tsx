@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,14 +11,14 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../styles/PatientDetailStyles';
+import { styles } from '../styles/PatientDetailStyles';
 import {
   getPatientHistoryById,
   deletePatientHistory,
 } from '../../services/PatientService';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface Diagnosis {
   history_id: number;
@@ -48,7 +48,7 @@ interface PatientDetails {
 }
 
 export type RootStackParamList = {
-  PatientDetail: {patientDetails: PatientDetails};
+  PatientDetail: { patientDetails: PatientDetails };
   History: {
     patientName: string;
     doctorName: string;
@@ -90,7 +90,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
   const [error, setError] = useState<string | null>(null);
 
   const route = useRoute<RouteProp<RootStackParamList, 'PatientDetail'>>();
-  const {patientDetails} = route.params;
+  const { patientDetails } = route.params;
 
   const [selectedDiagnosisId, setSelectedDiagnosisId] = useState<number | null>(
     null,
@@ -102,7 +102,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     top: number;
     left: number;
     menuDirection: 'up' | 'down';
-  }>({top: 0, left: 0, menuDirection: 'down'});
+  }>({ top: 0, left: 0, menuDirection: 'down' });
   const pressAnimValue = useRef(new Animated.Value(1)).current;
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -158,7 +158,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
       setSelectedDiagnosisId(null);
     } else {
       setSelectedDiagnosisId(id);
-      setMenuPosition({top: adjustedTop, left, menuDirection});
+      setMenuPosition({ top: adjustedTop, left, menuDirection });
     }
   };
 
@@ -237,7 +237,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
           },
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
@@ -276,13 +276,13 @@ export const PatientDetailScreen = (): React.JSX.Element => {
     );
   };
 
-  const renderDiagnosis = ({item}: {item: Diagnosis}) => (
+  const renderDiagnosis = ({ item }: { item: Diagnosis }) => (
     <Animated.View
       style={[
         styles.row,
         selectedDiagnosisId === item.history_id && styles.selectedRow,
         pressedDiagnosisId === item.history_id && {
-          transform: [{scale: pressAnimValue}],
+          transform: [{ scale: pressAnimValue }],
         },
       ]}>
       <TouchableOpacity
@@ -303,7 +303,7 @@ export const PatientDetailScreen = (): React.JSX.Element => {
           activeOpacity={0.7}
           style={styles.iconCell}
           onPress={event => {
-            const {pageY, pageX} = event.nativeEvent;
+            const { pageY, pageX } = event.nativeEvent;
             toggleMenu(item.history_id, pageY, pageX);
           }}>
           <Icon name="more-vert" size={24} color="#666" />
@@ -355,8 +355,8 @@ export const PatientDetailScreen = (): React.JSX.Element => {
                 data={diagnoses}
                 renderItem={renderDiagnosis}
                 keyExtractor={item => item.history_id.toString()}
-                contentContainerStyle={{paddingBottom: 50}}
-                style={{maxHeight: 385}}
+                contentContainerStyle={{ paddingBottom: 50 }}
+                style={{ maxHeight: 385 }}
                 refreshControl={
                   <RefreshControl
                     refreshing={refreshing}

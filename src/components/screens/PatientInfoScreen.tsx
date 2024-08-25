@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {styles} from '../styles/PatientDetailStyles';
-import {getPatientData, getPatientHistory} from '../../services/PatientService';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { styles } from '../styles/PatientDetailStyles';
+import { getPatientData, getPatientHistory } from '../../services/PatientService';
 
 interface Diagnosis {
   history_id: number;
@@ -42,7 +42,7 @@ interface PatientDetails {
 }
 
 export type RootStackParamList = {
-  PatientDetail: {patientDetails: PatientDetails};
+  PatientDetail: { patientDetails: PatientDetails };
   History: {
     patientName: string;
     doctorName: string;
@@ -234,12 +234,12 @@ export const PatientInfoScreen = (): React.JSX.Element => {
     );
   };
 
-  const renderDiagnosis = ({item}: {item: Diagnosis}) => (
+  const renderDiagnosis = ({ item }: { item: Diagnosis }) => (
     <Animated.View
       style={[
         styles.row,
         pressedDiagnosisId === item.history_id && {
-          transform: [{scale: pressAnimValue}],
+          transform: [{ scale: pressAnimValue }],
         },
       ]}>
       <TouchableOpacity
@@ -283,8 +283,8 @@ export const PatientInfoScreen = (): React.JSX.Element => {
                 data={diagnoses}
                 renderItem={renderDiagnosis}
                 keyExtractor={item => item.history_id.toString()}
-                contentContainerStyle={{paddingBottom: 20}}
-                style={{maxHeight: 350}}
+                contentContainerStyle={{ paddingBottom: 20 }}
+                style={{ maxHeight: 350 }}
                 refreshControl={
                   <RefreshControl
                     refreshing={refreshing}

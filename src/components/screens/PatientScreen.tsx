@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -13,10 +13,10 @@ import {
   Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {styles} from '../styles/PatientsAllStyles';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
-import {getPatients, deletePatient} from '../../services/PatientService';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { styles } from '../styles/PatientsAllStyles';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { getPatients, deletePatient } from '../../services/PatientService';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface Patient {
   patient_id: number;
@@ -24,7 +24,7 @@ interface Patient {
 }
 
 type RootStackParamList = {
-  PatientDetail: {patientDetails: Patient};
+  PatientDetail: { patientDetails: Patient };
   Register: undefined;
 };
 
@@ -45,7 +45,7 @@ export const PatientScreen = (): React.JSX.Element => {
     top: number;
     left: number;
     menuDirection: 'up' | 'down';
-  }>({top: 0, left: 0, menuDirection: 'down'});
+  }>({ top: 0, left: 0, menuDirection: 'down' });
   const scaleValue = useRef(new Animated.Value(1)).current;
   const pressAnimValue = useRef(new Animated.Value(1)).current;
 
@@ -93,7 +93,7 @@ export const PatientScreen = (): React.JSX.Element => {
       setSelectedPatientId(null);
     } else {
       setSelectedPatientId(id);
-      setMenuPosition({top: adjustedTop, left, menuDirection});
+      setMenuPosition({ top: adjustedTop, left, menuDirection });
     }
   };
 
@@ -132,7 +132,7 @@ export const PatientScreen = (): React.JSX.Element => {
   const handleRowPress = (id: number) => {
     const patient = patients.find(p => p.patient_id === id);
     if (patient) {
-      navigation.navigate('PatientDetail', {patientDetails: patient});
+      navigation.navigate('PatientDetail', { patientDetails: patient });
     }
   };
 
@@ -161,17 +161,17 @@ export const PatientScreen = (): React.JSX.Element => {
           },
         },
       ],
-      {cancelable: true},
+      { cancelable: true },
     );
   };
 
-  const renderPatient = ({item}: {item: Patient}) => (
+  const renderPatient = ({ item }: { item: Patient }) => (
     <Animated.View
       style={[
         styles.row,
         selectedPatientId === item.patient_id && styles.selectedRow,
         pressedPatientId === item.patient_id && {
-          transform: [{scale: pressAnimValue}],
+          transform: [{ scale: pressAnimValue }],
         },
       ]}>
       <TouchableOpacity
@@ -190,7 +190,7 @@ export const PatientScreen = (): React.JSX.Element => {
           activeOpacity={0.7}
           style={styles.iconCell}
           onPress={event => {
-            const {pageY, pageX} = event.nativeEvent;
+            const { pageY, pageX } = event.nativeEvent;
             toggleMenu(item.patient_id, pageY, pageX);
           }}>
           <Icon name="more-vert" size={24} color="#666" />
@@ -236,7 +236,7 @@ export const PatientScreen = (): React.JSX.Element => {
             data={patients}
             renderItem={renderPatient}
             keyExtractor={item => item.patient_id.toString()}
-            contentContainerStyle={{paddingBottom: 80}}
+            contentContainerStyle={{ paddingBottom: 80 }}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -275,7 +275,7 @@ export const PatientScreen = (): React.JSX.Element => {
         </View>
       )}
       <Animated.View
-        style={[styles.addButtonContainer, {transform: [{scale: scaleValue}]}]}>
+        style={[styles.addButtonContainer, { transform: [{ scale: scaleValue }] }]}>
         <TouchableOpacity
           activeOpacity={0.7}
           onPressIn={handlePressIn}

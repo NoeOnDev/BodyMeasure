@@ -1,6 +1,6 @@
-import React, {useRef, useState} from 'react';
-import {Animated} from 'react-native';
-import {LoginScreen} from './LoginScreen';
+import React, { useRef, useState } from 'react';
+import { Animated } from 'react-native';
+import { LoginScreen } from './LoginScreen';
 
 export const LoginSwitcher = (): React.JSX.Element => {
   const slideInAnimation = useRef(new Animated.Value(0)).current;

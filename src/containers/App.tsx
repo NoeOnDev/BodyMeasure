@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   NavigationContainer,
   StackActions,
@@ -7,18 +7,18 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {LoginSwitcher} from '../components/screens/LoginPatientAndDoctor';
-import {PatientScreen} from '../components/screens/PatientScreen';
-import {RegisterScreen} from '../components/screens/RegisterScreen';
-import {PatientDetailScreen} from '../components/screens/PatientDetailScreen';
-import {PatientInfoScreen} from '../components/screens/PatientInfoScreen';
-import {HistoryPatientScreen} from '../components/screens/HistoryPatientScreen';
-import {DiagnosticScreen} from '../components/screens/DiagnosticScreen';
+import { LoginSwitcher } from '../components/screens/LoginPatientAndDoctor';
+import { PatientScreen } from '../components/screens/PatientScreen';
+import { RegisterScreen } from '../components/screens/RegisterScreen';
+import { PatientDetailScreen } from '../components/screens/PatientDetailScreen';
+import { PatientInfoScreen } from '../components/screens/PatientInfoScreen';
+import { HistoryPatientScreen } from '../components/screens/HistoryPatientScreen';
+import { DiagnosticScreen } from '../components/screens/DiagnosticScreen';
 import LoadingScreen from '../components/screens/LoadingScreen';
-import {StyleSheet, BackHandler, Alert} from 'react-native';
+import { StyleSheet, BackHandler, Alert } from 'react-native';
 import {
   Menu,
   MenuOptions,
@@ -53,13 +53,13 @@ const PatientTabs = () => {
       initialRouteName="PatientInfo"
       activeColor="#0078FF"
       inactiveColor="#8e8e93"
-      barStyle={{backgroundColor: '#fff'}}>
+      barStyle={{ backgroundColor: '#fff' }}>
       <Tab.Screen
         name="PatientInfo"
         component={PatientInfoScreen}
         options={{
           tabBarLabel: 'Info',
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="account" color={color} size={24} />
           ),
         }}
@@ -69,7 +69,7 @@ const PatientTabs = () => {
         component={DiagnosticScreen}
         options={{
           tabBarLabel: 'Diagnóstico',
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <Icon name="stethoscope" color={color} size={24} />
           ),
         }}
@@ -121,7 +121,7 @@ const App = (): React.JSX.Element => {
               onPress: () => null,
               style: 'cancel',
             },
-            {text: 'Salir', onPress: () => BackHandler.exitApp()},
+            { text: 'Salir', onPress: () => BackHandler.exitApp() },
           ],
         );
         return true;
@@ -158,7 +158,7 @@ const App = (): React.JSX.Element => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={initialRoute}
-        screenOptions={({navigation}) => ({
+        screenOptions={({ navigation }) => ({
           headerStyle: {
             backgroundColor: '#0078FF',
           },
@@ -189,7 +189,7 @@ const App = (): React.JSX.Element => {
         <Stack.Screen
           name="Login"
           component={LoginSwitcher}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Patients"
@@ -204,12 +204,12 @@ const App = (): React.JSX.Element => {
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
-          options={{title: 'Registro de paciente'}}
+          options={{ title: 'Registro de paciente' }}
         />
         <Stack.Screen
           name="PatientDetail"
           component={PatientDetailScreen}
-          options={{title: 'Información del paciente'}}
+          options={{ title: 'Información del paciente' }}
         />
         <Stack.Screen
           name="PatientTabs"
