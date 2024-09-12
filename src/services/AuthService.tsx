@@ -2,7 +2,10 @@ import axios from 'axios';
 import { API_URL } from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+console.log('API_URL:', API_URL);
+
 const handleLoginError = (error: any) => {
+  console.log('Login error:', error);
   if (axios.isAxiosError(error) && error.response) {
     const statusCode = error.response.status;
 
@@ -21,12 +24,14 @@ const handleLoginError = (error: any) => {
         throw error.response.data.message || 'Error al iniciar sesión.';
     }
   } else {
+    console.log('Network error details:', error.message);
     throw 'Error al iniciar sesión.';
   }
 };
 
 export const loginDoctor = async (username: string, password: string) => {
   try {
+    console.log('LoginDoctor: Making request to', `${API_URL}/doctors/login`);
     const response = await axios.post(`${API_URL}/doctors/login`, {
       username,
       password,
@@ -44,6 +49,7 @@ export const loginDoctor = async (username: string, password: string) => {
 
 export const loginPatient = async (username: string, password: string) => {
   try {
+    console.log('LoginPatient: Making request to', `${API_URL}/patient/login`);
     const response = await axios.post(`${API_URL}/patient/login`, {
       username,
       password,
